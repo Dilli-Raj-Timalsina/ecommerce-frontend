@@ -1,0 +1,28 @@
+
+.testimonial{
+	height: 350px;
+	width: calc(360px * 10);
+	animation: scroll 38s linear infinite;
+}
+
+.testimonial:hover{
+	animation-play-state: paused;
+}
+
+.testimonialItem{
+	height: 200px;
+	width: 320px;
+	transition: transform 1s;
+}
+
+.testimonialItem:hover{
+	transform: scale(1.2)
+}
+
+@keyframes scroll{
+	0%{
+		transform: translateX(0)
+	}100%{
+		transform: translateX(calc(-320px*5))
+	}
+}

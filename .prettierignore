@@ -1,0 +1,6 @@
+.next
+/node_modules
+.gitignore
+.vscode
+package-lock.json
+tailwind.config.js

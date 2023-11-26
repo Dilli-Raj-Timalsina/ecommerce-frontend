@@ -1,0 +1,24 @@
+.bannerContainer {
+    background: url("/images/bannerbg.png");
+    width: 100vw;
+    overflow: hidden;
+}
+
+.bannerMarquee {
+    width: 200vw;
+    background-color: #0008;
+    animation: scroll 8s linear infinite;
+}
+
+.bannerText {
+    -webkit-text-stroke: 1px white;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-100vw));
+    }
+}
