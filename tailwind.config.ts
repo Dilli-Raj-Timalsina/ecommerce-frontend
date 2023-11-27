@@ -50,7 +50,7 @@ const config: Config = {
                     primary: "#ECE8FF",
                     secondary: "#8161d6",
                     accent: "#f5f5f5",
-                    neutral: "#000000",
+                    neutral: "#ab47bc",
                     "base-100": "#ffffff",
                     info: "#fcb96b",
                     success: "#23b893",
