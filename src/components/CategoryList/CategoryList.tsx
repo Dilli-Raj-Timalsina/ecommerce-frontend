@@ -16,7 +16,7 @@ export default function CategoryList() {
         >
             <Link
                 href={`/shop-all`}
-                className="py-4 p-4 text-center hover:text-secondary opacity-80 hover:opacity-100"
+                className="py-4 p-4 text-center hover:text-stone-300 opacity-80 hover:opacity-100"
             >
                 Shop All
             </Link>
@@ -27,7 +27,7 @@ export default function CategoryList() {
                             <Link
                                 href={`/${createCategoryLink(category)}`}
                                 key={i}
-                                className="py-4 p-4 text-center hover:text-secondary opacity-80 hover:opacity-100"
+                                className="py-4 p-4 text-center hover:text-stone-300 opacity-80 hover:opacity-100"
                             >
                                 {category}
                             </Link>
