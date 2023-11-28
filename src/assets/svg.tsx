@@ -39,7 +39,7 @@ export const CartIcon = () => {
             width={22}
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
+            stroke="black"
         >
             <path
                 strokeLinecap="round"

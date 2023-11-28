@@ -12,8 +12,8 @@ export default async function Navbar({ categories }: { categories: any }) {
     // const user = session?.user;
 
     return (
-        <div className="top-0 navbar z-20 w-screen fixed bg-base-100 text-neutral">
-            <div className="navbar-start px-0 lg:px-8">
+        <div className="top-0 navbar z-20 px-1 w-screen fixed flex items-center justify-around bg-base-100 text-neutral">
+            <div className=" px-0 lg:px-8">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
                         <HamburgerMenu />
@@ -44,8 +44,7 @@ export default async function Navbar({ categories }: { categories: any }) {
                     Ushopie
                 </Link>
             </div>
-
-            <div className="navbar-end w-4/5">
+            <div>
                 <div className="form-control relative w-96 mr-10 hidden lg:flex">
                     <input
                         type="text"
@@ -56,7 +55,8 @@ export default async function Navbar({ categories }: { categories: any }) {
                         <SearchIcon />
                     </button>
                 </div>
-
+            </div>
+            <div className="">
                 <LanguageDropdown />
                 <CartButton />
                 <NotifyButton />
