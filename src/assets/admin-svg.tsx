@@ -64,7 +64,7 @@ export const ProductsIcon = () => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <g clip-path="url(#clip0_18_6511)">
+            <g clipPath="url(#clip0_18_6511)">
                 <path
                     d="M3.04687 15.0316H2.10937C1.92289 15.0316 1.74405 14.9575 1.61219 14.8257C1.48033 14.6938 1.40625 14.515 1.40625 14.3285V10.1097C1.40625 9.92326 1.48033 9.74442 1.61219 9.61256C1.74405 9.4807 1.92289 9.40662 2.10937 9.40662H3.04687C3.23335 9.40662 3.4122 9.4807 3.54406 9.61256C3.67592 9.74442 3.75 9.92326 3.75 10.1097V14.3285C3.75 14.515 3.67592 14.6938 3.54406 14.8257C3.4122 14.9575 3.23335 15.0316 3.04687 15.0316Z"
                     fill="#8062D6"
@@ -159,12 +159,12 @@ export const HorizontalIcon = () => {
                     y2="0.5"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#E0E1E2" stop-opacity="0" />
-                    <stop offset="0.5" stop-color="#E0E1E2" />
+                    <stop stopColor="#E0E1E2" stopOpacity="0" />
+                    <stop offset="0.5" stopColor="#E0E1E2" />
                     <stop
                         offset="1"
-                        stop-color="#E0E1E2"
-                        stop-opacity="0.15625"
+                        stopColor="#E0E1E2"
+                        stopOpacity="0.15625"
                     />
                 </linearGradient>
             </defs>

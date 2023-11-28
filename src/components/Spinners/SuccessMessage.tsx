@@ -2,12 +2,16 @@ import React from "react";
 
 interface SuccessMessageProps {
     message: string;
+    position: string;
 }
 
-const SuccessMessage: React.FC<SuccessMessageProps> = ({ message }) => {
+const SuccessMessage: React.FC<SuccessMessageProps> = ({
+    message,
+    position,
+}) => {
     return (
         <div
-            className="max-w-xs z-50 fixed left-[40vw] top-10 delay-100 bg-white border rounded-md shadow-lg"
+            className={`${position} max-w-xs z-50 fixed  delay-100 bg-white border rounded-md shadow-lg `}
             role="alert"
         >
             <div className="flex p-4">

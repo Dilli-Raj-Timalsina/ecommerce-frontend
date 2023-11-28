@@ -74,10 +74,6 @@ export default function CreateProductBox() {
             for (let i = 0; i < event.target.files.length; i++) {
                 imageList.push(event.target.files[i]);
                 imageNameList.push(event.target.files[i].type);
-                //  imageNameList.push({
-                //      key: event.target.files[i].name,
-                //      type: event.target.files[i].type,
-                //  });
             }
             setProduct({
                 ...product,
@@ -87,16 +83,29 @@ export default function CreateProductBox() {
         }
     };
 
-    const uploadAllImage = async (url: string) => {
-        // for (let i = 0; i <= product.sideImage.length; i++) {
-        await fetch(url, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "image/*",
-            },
-            body: thumbnail,
-        });
-        // }
+    const uploadAllImage = async (
+        thumbnailURL: string,
+        sideImageURL: string[]
+    ) => {
+        for (let i = 0; i < sideImageURL.length; i++) {
+            if (i == 0) {
+                await fetch(thumbnailURL, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "image/*",
+                    },
+                    body: thumbnail,
+                });
+            } else {
+                await fetch(sideImageURL[i - 1], {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "image/*",
+                    },
+                    body: sideImage![i - 1],
+                });
+            }
+        }
     };
 
     //handle the submission of thE form:
@@ -120,13 +129,11 @@ export default function CreateProductBox() {
             );
 
             const result = await res.json();
-            console.log(result, "hii am url");
             if (res.ok) {
+                console.log(result);
+                await uploadAllImage(result.thumbnail, result.urls);
                 setLoading(false);
                 setSuccess(true);
-                console.log("hello");
-                await uploadAllImage(result.thumbnail);
-                console.log("hii");
 
                 setTimeout(() => {
                     setSuccess(false);
@@ -294,7 +301,7 @@ export default function CreateProductBox() {
                             )}
                         </div>
                     </div>
-                    <div className="w-1/2 mt-2">
+                    <div className="w-1/2 mt-2 ">
                         <label
                             htmlFor="binary"
                             className="block text-gray-700 text-base font-bold  mt-4"
@@ -356,10 +363,14 @@ export default function CreateProductBox() {
             {error && (
                 <ErrorMessage
                     message={"Please Signup as Admin, you are not Admin"}
+                    position="bottom-16"
                 />
             )}
             {success && (
-                <SuccessMessage message={"Product successfully created"} />
+                <SuccessMessage
+                    message={"Product successfully created"}
+                    position={"bottom-16"}
+                />
             )}
         </form>
     );

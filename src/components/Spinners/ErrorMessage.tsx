@@ -2,12 +2,13 @@ import React from "react";
 
 interface ErrorMessageProps {
     message: string;
+    position: string;
 }
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, position }) => {
     return (
         <div
-            className="max-w-xs z-50 fixed left-1/4 bg-white border rounded-md shadow-lg"
+            className={`${position} max-w-xs z-50 fixed left-1/4 bg-white border rounded-md shadow-lg`}
             role="alert"
         >
             <div className="flex p-4">

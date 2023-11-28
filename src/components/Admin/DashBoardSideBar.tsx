@@ -7,7 +7,6 @@ import {
     HorizontalIcon,
 } from "@/assets/admin-svg";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 type DashBoardSideBarProps = {
     productState: boolean;
