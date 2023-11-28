@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Banners() {
     return (
-        <div className="lg:h-screen w-screen text-primary">
+        <div className="lg:h-fit w-screen text-primary">
             <div className="grid grid-cols-2 lg:h-128 max-h-max">
                 <div
                     className="m-2 h-40 mr-1 pt-24 px-4 lg:m-10 lg:mr-5 lg:h-96 lg:pt-72 lg:pl-20 bg-red-800 bg-cover bg-center"

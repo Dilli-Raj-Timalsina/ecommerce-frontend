@@ -32,7 +32,7 @@ export default function ProductCard({
 
     return (
         <div
-            className="card px-3 bg-base-100 text-neutral w-56 border-secondary"
+            className="card px-1 shadow-md py-1 bg-base-100 text-neutral xs:w-36 sm:w-56 border-gray-300"
             style={{ borderWidth: "1px" }}
         >
             <Link
@@ -41,24 +41,25 @@ export default function ProductCard({
             >
                 {/* eslint-disable @next/next/no-img-element */}
                 <Image
-                    src={"/" + image || "/images/coffee.jpg"}
+                    // src={"/" + image || "/images/coffee.jpg"}
+                    src={"/images/goldstar.jpg"}
                     alt="product"
                     height={200}
                     width={400}
-                    className="object-cover h-32 lg:h-40"
+                    className="object-cover shadow-lg h-32 lg:h-40"
                 />
             </Link>
-            <div className="card-body p-4 lg:p-8">
+            <div className="card-body py-4 px-2 ">
                 <p className="line-clamp-1">{name}</p>
-                <p className="line-clamp-1 font-semibold">
-                    ${price.toString()}
-                </p>
-                <div className="card-actions justify-center lg:justify-end">
+                <div className="flex items-center justify-between">
+                    <p className="line-clamp-1 md:font-semibold">
+                        ${price.toString()}
+                    </p>
                     <button
                         onClick={() => {
                             addToCartHandler(product?.id);
                         }}
-                        className="btn hover:bg-neutral text-base-100 bg-secondary"
+                        className="btn px-2 hover:bg-neutral text-base-100 bg-secondary"
                     >
                         Add To Cart
                     </button>
