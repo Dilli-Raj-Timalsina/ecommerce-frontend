@@ -10,13 +10,10 @@ export default function CategoryList() {
     };
 
     return (
-        <div
-            className="hidden lg:flex text-xs px-10 pt-3 pb-1 h-min overflow-hidden bg-purple-400"
-            style={{ fontWeight: 600 }}
-        >
+        <div className="px-6 md:px-10  pt-5 md:pt-1 overflow-hidden  flex items-center  h-min  bg-purple-400 font-semibold md:text-base text-sm">
             <Link
                 href={`/shop-all`}
-                className="py-4 p-4 text-center hover:text-stone-300 opacity-80 hover:opacity-100"
+                className="py-4 p-4 text-gray-700 text-center  hover:text-gray-800 opacity-80 hover:opacity-100"
             >
                 Shop All
             </Link>
@@ -27,7 +24,7 @@ export default function CategoryList() {
                             <Link
                                 href={`/${createCategoryLink(category)}`}
                                 key={i}
-                                className="py-4 p-4 text-center hover:text-stone-300 opacity-80 hover:opacity-100"
+                                className="py-4 p-4 text-center text-gray-700 hover:text-gray-800 opacity-80 hover:opacity-100"
                             >
                                 {category}
                             </Link>

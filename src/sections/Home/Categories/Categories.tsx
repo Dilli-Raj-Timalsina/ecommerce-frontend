@@ -7,7 +7,7 @@ export default function Categories() {
     const { allCategory } = useProductContext();
 
     return (
-        <div className="mt-10 lg:pt-6">
+        <div className="mt-5 mb-2 md:mt-8 md:mb-4 ">
             {allCategory &&
                 Object.keys(allCategory)?.map((e: any, i: any) => {
                     return (

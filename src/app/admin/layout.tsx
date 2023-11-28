@@ -18,7 +18,7 @@ export const CategoryContext = createContext<CategoryContextType>({
 
 export default function Home({ children }: { children: React.ReactNode }) {
     const [productState, setProductState] = useState(false);
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState("clothes");
     const router = useRouter();
 
     const handleCategoryChange = (

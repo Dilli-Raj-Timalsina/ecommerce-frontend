@@ -8,7 +8,7 @@ import {
 
 export default function Footer() {
     return (
-        <div className="w-full pt-2 bg-white  text-slate-600">
+        <div className="w-full pt-2 bg-gray-100  text-gray-600">
             <footer className="footer z-10 grid-cols-1 text-center md:text-left md:grid-cols-4 p-10 place-content-around">
                 <div className="place-items-center mx-auto">
                     <h1 className="w-full text-secondary font-bold text-3xl">
@@ -21,7 +21,7 @@ export default function Footer() {
                     </p>
                 </div>
                 <nav className="mx-auto text-center md:text-left">
-                    <header className="footer-title w-full text-white opacity-100">
+                    <header className="footer-title w-full text-gray-700 opacity-100">
                         Company Info
                     </header>
                     <a className="link link-hover w-full">About us</a>
@@ -29,7 +29,7 @@ export default function Footer() {
                     <a className="link link-hover w-full">Blogs</a>
                 </nav>
                 <nav className="mx-auto text-center md:text-left">
-                    <header className="footer-title w-full text-white opacity-100">
+                    <header className="footer-title w-full text-gray-700 opacity-100">
                         Main Menu
                     </header>
                     <Link href={"/"} className="link link-hover w-full">
@@ -43,7 +43,7 @@ export default function Footer() {
                     </Link>
                 </nav>
                 <nav className="m-auto text-center md:text-left">
-                    <header className="footer-title text-white w-full opacity-100">
+                    <header className="footer-title text-gray-700 w-full opacity-100">
                         Connect with Us
                     </header>
                     <div className="grid grid-flow-col gap-2">

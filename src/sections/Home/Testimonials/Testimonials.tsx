@@ -37,7 +37,7 @@ const testimonials = [
 export default function Testimonials() {
     return (
         <div
-            className="w-screen h-100"
+            className="w-screen h-fit"
             style={{
                 backgroundImage: `url('/images/budda.jpg')`,
                 backgroundRepeat: "no-repeat",
@@ -51,7 +51,7 @@ export default function Testimonials() {
             </h1>
             <div
                 className="h-full w-screen relative overflow-hidden items-center grid"
-                style={{ backgroundColor: "#000" }}
+                style={{ backgroundColor: "#0006" }}
             >
                 <div className={`${styles.testimonial} flex gap-4 lg:p-10`}>
                     {testimonials &&

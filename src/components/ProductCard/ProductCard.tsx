@@ -33,7 +33,7 @@ export default function ProductCard({
     return (
         <div
             // className="card px-1 shadow-md py-1 bg-base-100 text-gray-600 border-gray-200"
-            className="card bg-base-100 hover:shadow-md hover:z-50 text-black w-32 lg:w-56 border-grey-400"
+            className="rounded-xs bg-base-100 hover:drop-shadow-md hover:z-50 text-black w-44 lg:w-56 border-grey-400"
             style={{ borderWidth: "1px" }}
         >
             <Link
@@ -60,7 +60,7 @@ export default function ProductCard({
                         onClick={() => {
                             addToCartHandler(product?.id);
                         }}
-                        className="btn px-2 hover:bg-neutral text-base-100 bg-secondary"
+                        className="btn px-2 hover:bg-neutral  text-base-100 bg-secondary"
                     >
                         Add To Cart
                     </button>
