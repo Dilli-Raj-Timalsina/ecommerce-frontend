@@ -19,7 +19,10 @@ const LanguageDropdown = () => {
 
     return (
         <div className="dropdown">
-            <label tabIndex={0} className="flex hover:bg-transparent">
+            <label
+                tabIndex={0}
+                className="flex text-gray-700 hover:bg-transparent"
+            >
                 <div className="indicator">
                     <span className="pe-1">{language.logo}</span>
                     {language.name}

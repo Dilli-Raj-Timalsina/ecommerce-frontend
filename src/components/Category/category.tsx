@@ -33,11 +33,11 @@ export default function Category({
                 </Link>
             </div>
             <div
-                className={`grid xs:ps-0 lg:p-6 md:gap-0 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 justify-even justify-items-center lg:gap-6`}
+                className={`grid xs:ps-0 lg:p-6 md:gap-0 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1 justify-center lg:gap-6`}
             >
                 {products.map((product: any, i: any) => {
                     return (
-                        <div key={i} className="m-auto my-2 w-auto">
+                        <div key={i} className="mx-auto my-2 w-auto">
                             <ProductCard
                                 product={product}
                                 category={category}

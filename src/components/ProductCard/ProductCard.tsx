@@ -32,21 +32,22 @@ export default function ProductCard({
 
     return (
         <div
-            className="card px-1 shadow-md py-1 bg-base-100 text-gray-600 border-gray-200"
+            // className="card px-1 shadow-md py-1 bg-base-100 text-gray-600 border-gray-200"
+            className="card bg-base-100 hover:shadow-md hover:z-50 text-black w-32 lg:w-56 border-grey-400"
             style={{ borderWidth: "1px" }}
         >
             <Link
                 href={`/${category}/${id}`}
-                className="rounded-t-xl overflow-hidden relative"
+                className="rounded-t-xl h-fit overflow-hidden relative"
             >
                 {/* eslint-disable @next/next/no-img-element */}
                 <Image
-                    // src={"/" + image || "/images/coffee.jpg"}
-                    src={"/images/goldstar.jpg"}
+                    src={image || "/images/coffee.jpg"}
+                    // src={"/images/goldstar.jpg"}
                     alt="product"
-                    height={400}
-                    width={600}
-                    className=" shadow-lg "
+                    height={200}
+                    width={400}
+                    className=" bg-cover mt-2 h-52 rounded-t-lg p-2 "
                 />
             </Link>
             <div className="card-body py-4 px-2 ">
