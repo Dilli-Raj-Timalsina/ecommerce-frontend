@@ -4,20 +4,20 @@ import Image from "next/image";
 import BounceSpinners from "../Spinners/BounceSpinner";
 import ErrorMessage from "../Spinners/ErrorMessage";
 import SuccessMessage from "../Spinners/SuccessMessage";
-import { title } from "process";
+import { categories } from "./CommonTypes";
+// type URLType = {
+//     key: string;
+//     type: string;
+// };
 
-type CategoryOption = {
-    value: string;
-    label: string;
-};
-
-type product = {
+type Product = {
     title: string;
     subTitle: string;
     requirements: string;
     description: string;
     price: string;
-    thumbnail: File | null;
+    thumbnail: string;
+    sideImage: string[];
 };
 
 export default function CreateProductBox() {
@@ -25,13 +25,16 @@ export default function CreateProductBox() {
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState("clothes");
-    const [product, setProduct] = useState<product>({
+    const [thumbnail, setThumbnail] = useState<File | null>(null);
+    const [sideImage, setSideImage] = useState<File[] | null>(null);
+    const [product, setProduct] = useState<Product>({
         title: "",
         subTitle: "",
         requirements: "",
         description: "",
         price: "",
-        thumbnail: null,
+        thumbnail: "",
+        sideImage: [],
     });
 
     const handleCategoryChange = (
@@ -52,65 +55,79 @@ export default function CreateProductBox() {
     const handleUploadThumbNail = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
+        console.log(event.target.files);
         if (event.target.files) {
+            setThumbnail(event.target.files ? event.target.files[0] : null);
             setProduct({
                 ...product,
-                thumbnail: event.target.files ? event.target.files[0] : null,
+                thumbnail: event.target.files ? event.target.files[0].type : "",
             });
         }
     };
 
-    // const handleUploadSideImage = (
-    //     event: React.ChangeEvent<HTMLInputElement>
-    // ) => {
-    //     let imageList = [];
-    //     if (event.target.files) {
-    //         for (let i = 0; i < event.target.files.length; i++) {
-    //             imageList.push(event.target.files[i]);
-    //         }
-    //         setproduct({
-    //             ...product,
-    //             sideImage: imageList,
-    //         });
-    //     }
-    // };
+    const handleUploadSideImage = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        let imageList = [];
+        let imageNameList = [];
+        if (event.target.files) {
+            for (let i = 0; i < event.target.files.length; i++) {
+                imageList.push(event.target.files[i]);
+                imageNameList.push(event.target.files[i].type);
+                //  imageNameList.push({
+                //      key: event.target.files[i].name,
+                //      type: event.target.files[i].type,
+                //  });
+            }
+            setProduct({
+                ...product,
+                sideImage: imageNameList,
+            });
+            setSideImage(imageList);
+        }
+    };
+
+    const uploadAllImage = async (url: string) => {
+        // for (let i = 0; i <= product.sideImage.length; i++) {
+        await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "image/*",
+            },
+            body: thumbnail,
+        });
+        // }
+    };
 
     //handle the submission of thE form:
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        const form = new FormData();
-        form.append("title", product.title);
-        form.append("subTitle", product.subTitle);
-        form.append("description", product.description);
-        form.append("price", product.price.toString());
-        form.append("category", category);
-        form.append("binary", product.thumbnail!);
-
         try {
             const res = await fetch(
                 process.env.NEXT_PUBLIC_BACKEND! +
                     process.env.NEXT_PUBLIC_CREATEPRODUCT,
                 {
                     method: "POST",
-                    headers: {},
-                    body: form,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        ...product,
+                        category,
+                    }),
                 }
             );
 
             const result = await res.json();
-            console.log(result);
+            console.log(result, "hii am url");
             if (res.ok) {
                 setLoading(false);
                 setSuccess(true);
-                setProduct({
-                    title: "",
-                    subTitle: "",
-                    requirements: "",
-                    description: "",
-                    price: "",
-                    thumbnail: null,
-                });
+                console.log("hello");
+                await uploadAllImage(result.thumbnail);
+                console.log("hii");
+
                 setTimeout(() => {
                     setSuccess(false);
                 }, 4000);
@@ -129,7 +146,7 @@ export default function CreateProductBox() {
 
     return (
         <form
-            className="h-screen  flex flex-col items-center bg-gray-100"
+            className="h-fit pb-4  flex flex-col items-center bg-gray-100"
             onSubmit={handleSubmit}
         >
             <h1 className=" text-3xl font-bold text-gray-800 mt-2 hidden md:flex ">
@@ -219,7 +236,7 @@ export default function CreateProductBox() {
                             className="w-full px-3 py-1 border border-gray-200 rounded-md shadow-sm focus:outline-none focus:drop-shadow-md"
                             required
                         >
-                            {categoryOptions.map((option) => (
+                            {categories.map((option) => (
                                 <option key={option.value} value={option.value}>
                                     {option.label}
                                 </option>
@@ -267,9 +284,9 @@ export default function CreateProductBox() {
                         </div>
 
                         <div className="p-2 mb-7 border border-gray-100 flex gap-1 items-center">
-                            {product.thumbnail != null && (
+                            {thumbnail != null && (
                                 <Image
-                                    src={URL.createObjectURL(product.thumbnail)}
+                                    src={URL.createObjectURL(thumbnail)}
                                     alt="Selected File Preview"
                                     width={44}
                                     height={44}
@@ -277,7 +294,7 @@ export default function CreateProductBox() {
                             )}
                         </div>
                     </div>
-                    {/* <div className="w-1/2 mt-2">
+                    <div className="w-1/2 mt-2">
                         <label
                             htmlFor="binary"
                             className="block text-gray-700 text-base font-bold  mt-4"
@@ -315,8 +332,8 @@ export default function CreateProductBox() {
                         </div>
 
                         <div className="p-2 mb-7 border border-gray-100 flex gap-1 items-center">
-                            {product.sideImage != null &&
-                                product.sideImage.map((item, key) => (
+                            {sideImage != null &&
+                                sideImage.map((item, key) => (
                                     <Image
                                         src={URL.createObjectURL(item)}
                                         alt="Selected File Preview"
@@ -326,14 +343,14 @@ export default function CreateProductBox() {
                                     />
                                 ))}
                         </div>
-                    </div> */}
+                    </div>
                 </div>
                 <button
-                    className="bg-purple-600 px-3 py-1 m-1 rounded-md ml-2 mb-2 text-white font-normal text-base hover:drop-shadow-xl hover:bg-purple-700 w-28 flex items-center gap-1"
+                    className="bg-purple-600 px-3 text-center  py-1 m-1 rounded-md ml-2 mb-2 text-white font-normal text-base hover:drop-shadow-xl hover:bg-purple-700 w-fit flex items-center gap-1"
                     type="submit"
                     disabled={loading}
                 >
-                    {loading ? <BounceSpinners /> : <span>Continue</span>}
+                    {loading ? <BounceSpinners /> : <span>create</span>}
                 </button>
             </div>
             {error && (
@@ -347,10 +364,3 @@ export default function CreateProductBox() {
         </form>
     );
 }
-
-const categoryOptions: CategoryOption[] = [
-    { value: "clothes", label: "Clothes" },
-    { value: "groceries", label: "Groceries" },
-    { value: "puja-items", label: "Puja Items" },
-    { value: "utensils", label: "Utensils" },
-];

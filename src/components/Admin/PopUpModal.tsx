@@ -1,30 +1,19 @@
 import { useState, useEffect } from "react";
 import ErrorMessage from "../Spinners/ErrorMessage";
 import SuccessMessage from "../Spinners/SuccessMessage";
+import { categories, Product } from "./CommonTypes";
 
-type CategoryOption = {
-    value: string;
-    label: string;
-};
 type PopUpModalProps = {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     id: string;
 };
 
-type product = {
-    title: string;
-    subTitle: string;
-    description: string;
-    price: string;
-    category: string;
-};
-
 export default function PopUpModal({ open, setOpen, id }: PopUpModalProps) {
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [product, setProduct] = useState<product>({
+    const [product, setProduct] = useState<Product>({
         title: "",
         subTitle: "",
         description: "",
@@ -197,7 +186,7 @@ export default function PopUpModal({ open, setOpen, id }: PopUpModalProps) {
                         className="w-full px-3 py-1 border border-gray-200 rounded-md shadow-sm focus:outline-none focus:drop-shadow-md"
                         required
                     >
-                        {categoryOptions.map((option) => (
+                        {categories.map((option) => (
                             <option key={option.value} value={option.value}>
                                 {option.label}
                             </option>
@@ -233,10 +222,3 @@ export default function PopUpModal({ open, setOpen, id }: PopUpModalProps) {
         </form>
     );
 }
-
-const categoryOptions: CategoryOption[] = [
-    { value: "clothes", label: "Clothes" },
-    { value: "groceries", label: "Groceries" },
-    { value: "puja-items", label: "Puja Items" },
-    { value: "utensils", label: "Utensils" },
-];
