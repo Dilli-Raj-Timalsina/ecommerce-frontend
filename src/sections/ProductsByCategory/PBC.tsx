@@ -131,12 +131,6 @@ export default function ProductsByCategory({
                         </div>
                         {/* PRICING */}
                         <div className="">
-                            {/* <summary className="collapse-title  text-md font-thin pl-0">
-                                <div className="flex items-center ">
-                                    <span>Price</span>
-                                </div>
-                            </summary>
-                            <div className="collapse-content pl-0"> */}
                             <div className=" text-lg text-center">Price</div>
                             <input
                                 type="range"

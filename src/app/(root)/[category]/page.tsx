@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "@/app/(root)/page";
-import ProductsByCategory from "@/sections/ProductsByCategory/PBC";
+import ProductsByCategory from "@/sections/ProductsByCategory/ProductsByCategory";
 
 const getProductDetails = async (category: string) => {
     try {
