@@ -89,17 +89,21 @@ export default function ProductsByCategory({
                 <div className="flex dropdown dropdown-bottom dropdown-end lg:w-full  lg:justify-end lg:pr-20">
                     <label
                         tabIndex={0}
-                        className="btn m-1 w-42 lg:w-56 font-medium justify-between border border-neutral hover:bg-base-100 lg:pl-4 bg-base-100"
+                        className="btn m-1 w-40 font-medium justify-between border border-neutral hover:bg-base-100 lg:pl-4 bg-base-100"
                     >
                         {sortBy[sortType]} <ArrowBottom />
                     </label>
                     <ul
                         tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mr-20"
+                        className="dropdown-content z-[1] menu p-2 shadow white bg-base-100 rounded-box lg:w-52 lg:mr-20"
                     >
                         {sortBy?.map((e, i) => {
                             return (
-                                <li key={i} onClick={() => sortItems(i)}>
+                                <li
+                                    className=" whitespace-nowrap"
+                                    key={i}
+                                    onClick={() => sortItems(i)}
+                                >
                                     <a>{e}</a>
                                 </li>
                             );
