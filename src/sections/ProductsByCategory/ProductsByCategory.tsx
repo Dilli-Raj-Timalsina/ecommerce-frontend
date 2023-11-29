@@ -34,15 +34,39 @@ export default function ProductsByCategory({
     const [rateRange, setRateRange] = useState(0);
     const [categoryType, setCategoryType] = useState(0);
     const [sortType, setSortType] = useState(0);
-
+    const [counter, setCounter] = useState(0);
+    const [maxCounter, setMaxCounter] = useState(
+        Math.floor(displayProducts.length / 8)
+    );
+    console.log("Max Counter is ", maxCounter);
+    console.log("Counter is ", counter);
     useEffect(() => {
-        setDisplayProducts(products);
+        setDisplayProducts(products.slice(counter * 8, (counter + 1) * 8));
     }, [products]);
-
+    useEffect(() => {
+        setMaxCounter(Math.floor(displayProducts.length / 8));
+    }, [products, displayProducts]);
+    useEffect(() => {
+        setDisplayProducts(products.slice(counter * 8, (counter + 1) * 8));
+        // c = 1
+        // s = 1*5 e = 2*5 5,10
+        // c= 3 , s = 3*5 e = 4*5 15,20
+        //		  3*10 , 4*10
+        //
+    }, [counter]);
     const sliderHandler = (e: any) => {
         setRateRange(e.target.value);
     };
-
+    const handlePrev = (e: any) => {
+        if (counter > 0) {
+            setCounter(counter - 1);
+        }
+    };
+    const handleNext = (e: any) => {
+        if (counter < maxCounter) {
+            setCounter(counter + 1);
+        }
+    };
     const displayRange = () => {
         let itemsToShow = products.filter((product) => {
             return product?.price <= rateRange;
@@ -146,7 +170,7 @@ export default function ProductsByCategory({
             </div>
             <div className="container lg:w-full flex">
                 {/* Filter */}
-                <div className="w-1/5 hidden lg:block px-10">
+                <div className="w-1/5 h-screen hidden lg:block px-10">
                     <p className="pb-4 text-2xl font-extralight border-b">
                         Filter by
                     </p>
@@ -214,7 +238,7 @@ export default function ProductsByCategory({
                     </div>
                 </div>
 
-                <div className="w-4/5 px-2 grid grid-cols-2 lg:grid-cols-4 gap-4 my-4">
+                <div className="w-4/5 px-2 grid grid-cols-2 lg:grid-cols-4 gap-4 my-4 mb-0">
                     {displayProducts &&
                         displayProducts?.map((product, i: number) => {
                             return (
@@ -227,6 +251,20 @@ export default function ProductsByCategory({
                             );
                         })}
                 </div>
+            </div>
+            <div className="flex m-6 mb-10 text-xl text-white gap-5 underline item-center justify-center">
+                <button
+                    className="bg-secondary px-3 py-2 rounded-lg"
+                    onClick={handlePrev}
+                >
+                    Prev
+                </button>
+                <button
+                    className="bg-secondary px-3 rounded-lg"
+                    onClick={handleNext}
+                >
+                    Next
+                </button>
             </div>
         </div>
     );
