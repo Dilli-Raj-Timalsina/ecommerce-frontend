@@ -32,7 +32,6 @@ export default function ProductCard({
 
     return (
         <div
-            // className="card px-1 shadow-md py-1 bg-base-100 text-gray-600 border-gray-200"
             className="rounded-xs bg-base-100 hover:drop-shadow-md hover:z-50 text-black w-44 lg:w-56 border-grey-400"
             style={{ borderWidth: "1px" }}
         >
