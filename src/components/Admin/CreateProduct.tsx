@@ -357,7 +357,11 @@ export default function CreateProductBox() {
                     type="submit"
                     disabled={loading}
                 >
-                    {loading ? <BounceSpinners /> : <span>create</span>}
+                    {loading ? (
+                        <BounceSpinners size={"w-3 h-3"} />
+                    ) : (
+                        <span>create</span>
+                    )}
                 </button>
             </div>
             {error && (

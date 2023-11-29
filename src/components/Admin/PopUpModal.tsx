@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ErrorMessage from "../Spinners/ErrorMessage";
 import SuccessMessage from "../Spinners/SuccessMessage";
+import BounceSpinners from "../Spinners/BounceSpinner";
 import { categories, Product } from "./CommonTypes";
 
 type PopUpModalProps = {
@@ -32,11 +33,7 @@ export default function PopUpModal({ open, setOpen, id }: PopUpModalProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        console.log(
-            process.env.NEXT_PUBLIC_BACKEND! +
-                process.env.NEXT_PUBLIC_EDITPRODUCT +
-                id
-        );
+
         try {
             const res = await fetch(
                 process.env.NEXT_PUBLIC_BACKEND! +
@@ -58,6 +55,7 @@ export default function PopUpModal({ open, setOpen, id }: PopUpModalProps) {
                 setSuccess(true);
                 setTimeout(() => {
                     setSuccess(false);
+                    setOpen(!open);
                 }, 4000);
             } else {
                 setError(true);
@@ -198,11 +196,16 @@ export default function PopUpModal({ open, setOpen, id }: PopUpModalProps) {
                 <button
                     className="bg-purple-600 px-3 py-1 mb-6  mt-2 rounded-md  text-white font-normal text-base hover:drop-shadow-xl hover:bg-purple-700 w-fit flex items-center "
                     type="submit"
+                    disabled={loading}
                 >
-                    save
+                    {loading ? (
+                        <BounceSpinners size={"w-3 h-3"} />
+                    ) : (
+                        <span>edit</span>
+                    )}
                 </button>
                 <button
-                    className="bg-red-500 px-3 py-1 mb-6  mt-2 rounded-md  text-white font-normal text-base hover:drop-shadow-xl hover:bg-red-600 w-fit flex items-center "
+                    className="bg-red-500 px-3 py-1 mb-6  mt-2 rounded-md  text-white font-normal text-base hover:drop-shadow-xl hover:bg-red-600 w-fit flex items-center left-"
                     onClick={() => {
                         setOpen(!open);
                     }}
@@ -214,10 +217,14 @@ export default function PopUpModal({ open, setOpen, id }: PopUpModalProps) {
             {error && (
                 <ErrorMessage
                     message={"Please Signup as Admin, you are not Admin"}
+                    position=""
                 />
             )}
             {success && (
-                <SuccessMessage message={"Product edited successfully"} />
+                <SuccessMessage
+                    message={"Product edited successfully"}
+                    position="bottom-9 left-32"
+                />
             )}
         </form>
     );
