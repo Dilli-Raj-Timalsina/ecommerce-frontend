@@ -4,10 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { useProductContext } from "@/context/ProductContext";
-interface SearchResultsInHouse {
-    title: string;
-    id: number;
-}
+
 interface SearchResultsAPIType {
     id: number;
     title: string;
@@ -49,8 +46,8 @@ const SeachBar = () => {
         setSearchItem(item);
     };
     return (
-        <div className="form-control relative w-96 hidden lg:flex ml-24 ">
-            <form>
+        <div className="form-control relative  hidden lg:flex ml-32 ">
+            <form className="flex items-center">
                 <input
                     type="search"
                     value={searchItem}
@@ -58,11 +55,11 @@ const SeachBar = () => {
                     onClick={() => setShowModel(!showModel)}
                     onChange={(e) => handleOnChange(e.target.value)}
                     placeholder="Search..."
-                    className="input focus:outline-none text-sm hover:bg-primary focus:border-neutral hover:border-neutral border-secondary focus:bg-primary bg-white rounded-3xl input-bordered pl-6 pr-20 md:w-auto"
+                    className="input text-gray-600 focus:outline-none text-sm hover:bg-primary focus:border-neutral hover:border-neutral border-secondary focus:bg-primary bg-white  rounded-l-3xl rounded-r-none input-bordered  px-20 w-full"
                 />
                 <button
                     type="submit"
-                    className="btn bg-secondary hover:bg-purple-400 text-base-100 btn-ghost absolute right-0 rounded-l-none px-6  rounded-r-3xl"
+                    className="btn bg-secondary hover:bg-purple-400 text-base-100 btn-ghost   rounded-l-none px-6  rounded-r-3xl"
                 >
                     <SearchIcon />
                 </button>
@@ -77,7 +74,7 @@ const SeachBar = () => {
                         {searchResultsAPI.slice(0, 5).map((result, index) => (
                             <li
                                 key={index}
-                                className="hover:bg-gray-200 hover:text-gray-950 cursor-pointer pl-4 text-gray-600 "
+                                className="hover:bg-gray-200 hover:text-gray-950 cursor-pointer pl-4 py-1 text-sm text-gray-700 "
                                 onClick={() => {
                                     setSearchItem("");
                                     setShowModel(false);
