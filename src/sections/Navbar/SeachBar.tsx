@@ -4,16 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { useProductContext } from "@/context/ProductContext";
-interface SearchResultsInHouse {
-    title: string;
-    id: number;
-}
+import Link from "next/link";
 interface SearchResultsAPIType {
     id: number;
     title: string;
 }
 const SeachBar = () => {
-    const { allProducts, allCategory } = useProductContext();
+    const { allProducts } = useProductContext();
     const [searchItem, setSearchItem] = useState("");
     const [showModel, setShowModel] = useState<boolean>(false);
 
@@ -22,15 +19,6 @@ const SeachBar = () => {
     >([]);
 
     const router = useRouter();
-    //  category: "groceries"
-    // createdDate: "2023-11-28T14:35:41.194Z"
-    // description: "ok"
-    // id:119
-    // price: 4500
-    // sideImages: []
-    // subTitle:"ok"
-    // thumbNail: "https://9somerandom.s3.ap-south-1.amazonaws.com/groceries/photo8448011774.8183155.jpeg"
-    // title: "panir masala soup"
     useEffect(() => {
         const performSearch = async () => {
             if (!allProducts) return;
@@ -54,7 +42,7 @@ const SeachBar = () => {
                 <input
                     type="search"
                     value={searchItem}
-                    onBlur={() => setShowModel(false)}
+                    // onBlur={() => setShowModel(false)}
                     onClick={() => setShowModel(!showModel)}
                     onChange={(e) => handleOnChange(e.target.value)}
                     placeholder="Search..."
@@ -77,14 +65,14 @@ const SeachBar = () => {
                         {searchResultsAPI.slice(0, 5).map((result, index) => (
                             <li
                                 key={index}
-                                className="hover:bg-gray-200 hover:text-gray-950 cursor-pointer pl-4 text-gray-600 "
                                 onClick={() => {
-                                    setSearchItem("");
                                     setShowModel(false);
-                                    router.push(`/shop-all/${result.id}`);
                                 }}
+                                className="hover:bg-gray-200 hover:text-gray-950  pl-4 text-gray-600 "
                             >
-                                {result.title}
+                                <Link href={`/shop-all/${result.id}`}>
+                                    {result.title}
+                                </Link>
                             </li>
                         ))}
                     </ul>
