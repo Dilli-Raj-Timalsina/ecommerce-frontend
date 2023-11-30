@@ -7,7 +7,7 @@ import NotifyButton from "@/components/NotifyButton/NotifyButton";
 import UserProfile from "@/components/UserProfile/UserProfile";
 import SeachBar from "./SeachBar";
 
-export default async function Navbar({ categories }: { categories: any }) {
+export default function Navbar({ categories }: { categories: any }) {
     return (
         <div className="top-0 navbar z-20  w-screen fixed flex items-center justify-between px-5 bg-base-100 text-neutral">
             <div className=" px-0 lg:px-8">
@@ -41,9 +41,9 @@ export default async function Navbar({ categories }: { categories: any }) {
                     Ushopie
                 </Link>
             </div>
-            <div>
-                <SeachBar />
-            </div>
+
+            <SeachBar />
+
             <div className="px-1">
                 <LanguageDropdown />
                 <CartButton />

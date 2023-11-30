@@ -82,7 +82,7 @@ export default function ProductsByCategory({
     return (
         <div className="">
             <CategoryList />
-            <h1 className="text-secondary text-4xl text-center mt-10">
+            <h1 className="text-secondary text-4xl text-center my-5 lg:mt-10 ">
                 {category === "shop-all" ? "Shop All" : products[0]?.category}
             </h1>
             <div className="flex items-center justify-around ">
@@ -172,7 +172,7 @@ export default function ProductsByCategory({
                     {/* </div> */}
                 </div>
             </div>
-            <div className="container lg:w-full flex">
+            <div className="lg:container lg:w-full flex">
                 {/* Filter */}
                 <div className="w-1/5 h-screen hidden lg:block px-10">
                     <p className="pb-4 text-2xl font-extralight border-b">
@@ -242,7 +242,7 @@ export default function ProductsByCategory({
                     </div>
                 </div>
 
-                <div className="w-4/5 px-2 grid grid-cols-2 lg:grid-cols-4 gap-4 my-4 mb-0">
+                <div className="lg:w-4/5  grid grid-cols-2  lg:grid-cols-4 gap-4 px-6 my-4 mb-0 ">
                     {displayProducts &&
                         displayProducts?.map((product, i: number) => {
                             return (
