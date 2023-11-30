@@ -1,16 +1,13 @@
+"use client";
 import Link from "next/link";
 import LanguageDropdown from "@/components/LanguageDropdown/LanguageDropdown";
 import { HamburgerMenu, SearchIcon, ProfileIcon } from "@/assets/svg";
 import CartButton from "@/components/CartButton/CartButton";
 import NotifyButton from "@/components/NotifyButton/NotifyButton";
 import UserProfile from "@/components/UserProfile/UserProfile";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import SeachBar from "./SeachBar";
 
 export default async function Navbar({ categories }: { categories: any }) {
-    // const session = await getServerSession(authOptions);
-    // const user = session?.user;
-
     return (
         <div className="top-0 navbar z-20  w-screen fixed flex items-center justify-between px-5 bg-base-100 text-neutral">
             <div className=" px-0 lg:px-8">
@@ -45,16 +42,7 @@ export default async function Navbar({ categories }: { categories: any }) {
                 </Link>
             </div>
             <div>
-                <div className="form-control relative w-96 hidden lg:flex ml-24 ">
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        className="input focus:outline-none text-sm hover:bg-primary focus:border-neutral hover:border-neutral border-secondary focus:bg-primary bg-white rounded-3xl input-bordered pl-6 pr-20 md:w-auto"
-                    />
-                    <button className="btn bg-secondary hover:bg-purple-400 text-base-100 btn-ghost absolute right-0 rounded-l-none px-6  rounded-r-3xl">
-                        <SearchIcon />
-                    </button>
-                </div>
+                <SeachBar />
             </div>
             <div className="px-1">
                 <LanguageDropdown />
