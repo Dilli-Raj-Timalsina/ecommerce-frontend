@@ -1,11 +1,12 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { CartIcon } from "@/assets/svg";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import ToggleDetail from "@/components/ToggleDetail.tsx/ToggleDetail";
 import { useCartContext } from "@/context/CartContext";
+import Love from "@/assets/love";
 
 const productInfo = [
     {
@@ -29,10 +30,18 @@ export default function ProductDetails({
     product: any;
     relatedProducts: any[];
 }) {
-    const imgRef = useRef(null);
-
     const { addItemToCart } = useCartContext();
+    const [wishlisted, setWishlisted] = useState<boolean>(product.wishlist);
+    const imgRef = useRef<HTMLImageElement | null>(null);
+    const handleAddWishlist = () => {};
+    const handleSideImgClick = (image: string) => {
+        console.log("Side image clicked");
 
+        if (imgRef.current) {
+            imgRef.current.src = `https://9somerandom.s3.ap-south-1.amazonaws.com
+			/${image}?t=${Date.now()}`;
+        }
+    };
     const addToCartHandler = (id: any) => {
         addItemToCart(id);
     };
@@ -54,12 +63,37 @@ export default function ProductDetails({
                     </ul>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2">
-                    <div className="">
-                        <div className="image-section flex justify-center items-center">
+                    <div className=" flex flex-col lg:flex-row items-center justify-between">
+                        <ul className="flex order-last  p-2 lg:flex-col gap-2">
+                            {product?.sideImages.map(
+                                (image: string, i: number) => {
+                                    return (
+                                        <li
+                                            key={i}
+                                            className="w-fit hover:shadow-md hover:shadow-orange-400 cursor-pointer hover:border-blue-400"
+                                        >
+                                            <Image
+                                                className="w-32 rounded-md h-32"
+                                                width={100}
+                                                height={100}
+                                                onClick={(e) => {
+                                                    handleSideImgClick(image);
+                                                }}
+                                                src={`https://9somerandom.s3.ap-south-1.amazonaws.com
+									/${image}`}
+                                                alt={product.title}
+                                            ></Image>{" "}
+                                        </li>
+                                    );
+                                }
+                            )}
+                        </ul>
+                        <div className="image-section flex p-4 justify-center items-center">
                             <div>
                                 {/* eslint-disable @next/next/no-img-element */}
-                                <Image
+                                <img
                                     ref={imgRef}
+                                    className=" h-1/2 lg:h-4/5-screen "
                                     alt="Product Image"
                                     src={product?.thumbNail}
                                     width={imageProps.width}
@@ -90,11 +124,9 @@ export default function ProductDetails({
                                     +
                                 </button>
                             </div>
-                            <div className="flex bg-orange-400 hover:bg-orange-500 px-2 py-1 border-green-400 rounded-md items-center">
-                                <button className=" w-32  p-2">
-                                    Add To Cart
-                                </button>
-                                <CartIcon />
+                            <div className="flex bg-orange-400 whitespace-nowrap hover:bg-orange-500 px-2 pe-4 py-1 border-green-400 rounded-md justify-center  items-center">
+                                <button className=" w-32  p-2">Wishlist</button>
+                                <Love />
                             </div>
                             {/* className="flex cursor-pointer items-center btn w-32 border-solid justify-between border-secondary bg-primary text-secondary hover:opacity-80 hover:bg-primary hover:border-secondary" */}
                         </div>
