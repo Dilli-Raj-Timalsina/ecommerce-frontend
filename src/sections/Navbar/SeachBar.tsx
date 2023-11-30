@@ -66,10 +66,10 @@ const SeachBar = () => {
                         {searchResultsAPI.slice(0, 5).map((result, index) => (
                             <li
                                 key={index}
-                                className="hover:bg-gray-200 hover:text-gray-950 cursor-pointer pl-4 py-1 text-sm text-gray-700 "
                                 onClick={() => {
                                     setShowModel(false);
                                 }}
+                                className="hover:bg-gray-200 hover:text-gray-950 cursor-pointer pl-4 py-1 text-sm text-gray-700 "
                             >
                                 <Link href={`/shop-all/${result.id}`}>
                                     {result.title}
