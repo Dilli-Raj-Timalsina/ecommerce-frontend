@@ -34,7 +34,7 @@ const Wishlist = () => {
     return (
         <div>
             <h2 className="text-2xl ms-10 p-4 font-bold">Wishlist Items:</h2>
-            <div className="lg:w-4/5 ps-10  grid grid-cols-2  lg:grid-cols-3 gap-2">
+            <div className="lg:w-4/5 lg:ps-10  grid grid-cols-2  lg:grid-cols-3 gap-2">
                 {products &&
                     products?.map((prod, i: number) => {
                         return (

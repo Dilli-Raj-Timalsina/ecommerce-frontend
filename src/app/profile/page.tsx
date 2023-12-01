@@ -1,11 +1,53 @@
 "use client";
 import React from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { API_URL } from "../(root)/page";
+import ProductCardForProfile from "@/components/ProductCard/ProductCardForProfile";
+import ProductContext, { useProductContext } from "@/context/ProductContext";
 const ProfilePage = () => {
+    const [pendingOrders, setPendingOrders] = useState<any[]>([]);
+    const [completedOrders, setCompletedOrders] = useState<any[]>([]);
+    const [orderHistory, setOrderHistory] = useState<any[]>([]);
+    const [activeButton, setActiveButton] = useState("pending"); //
+    const { allProducts } = useProductContext();
     const { user } = useAuthContext();
     const router = useRouter();
+
+    useEffect(() => {
+        const fetchPendingOrders = async () => {
+            if (allProducts) {
+                setPendingOrders(allProducts?.slice(0, 5));
+                setCompletedOrders(allProducts?.slice(3, 6));
+                setOrderHistory(allProducts?.slice(3, 6));
+            }
+        };
+
+        // const fetchCompletedOrders = async () => {
+        //     try {
+        //         const response = await axios.get("/api/completed-orders");
+        //         setCompletedOrders(response.data);
+        //     } catch (error) {
+        //         console.error("Error fetching completed orders:", error);
+        //     }
+        // };
+
+        // const fetchOrderHistory = async () => {
+        //     try {
+        //         const response = await axios.get("/api/order-history");
+        //         setOrderHistory(response.data);
+        //     } catch (error) {
+        //         console.error("Error fetching order history:", error);
+        //     }
+        // };
+
+        fetchPendingOrders();
+        // fetchCompletedOrders();
+        // fetchOrderHistory();
+    }, [allProducts]);
+
     if (!user?.id) {
         return (
             <>
@@ -30,87 +72,123 @@ const ProfilePage = () => {
                     <h1 className="text-xl font-semibold text-center mb-10">
                         YOUR DASHBOARD
                     </h1>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="bg-white rounded-lg shadow-lg p-6">
-                            <p className="text-lg font-bold mb-4">
+                    <div className="grid w-fit grid-cols-3 gap-4">
+                        <div
+                            onClick={() => {
+                                setActiveButton("pending");
+                            }}
+                            className={`bg-white ${
+                                activeButton === "pending"
+                                    ? " border-teal-400 bg-green-100"
+                                    : ""
+                            } cursor-pointer  rounded-lg shadow-lg p-4`}
+                        >
+                            <p className="text-sm lg:text-lg font-bold mb-4">
                                 Pending Orders
                             </p>
                             <div className="flex items-center justify-center">
                                 <p className="text-4xl font-bold text-blue-500">
-                                    {" "}
-                                    {user.haveEnrolled ? "10" : "0"}
+                                    {pendingOrders.length}
                                 </p>
                             </div>
                         </div>
-                        <div className="bg-white rounded-lg shadow-lg p-6">
-                            <p className="text-lg font-bold mb-4">
+                        <div
+                            onClick={() => {
+                                setActiveButton("completed");
+                            }}
+                            className={`"bg-white cursor-pointer ${
+                                activeButton === "completed"
+                                    ? " border-teal-400 bg-green-100"
+                                    : ""
+                            } rounded-lg shadow-lg p-4`}
+                        >
+                            <p className="text-sm lg:text-lg font-bold mb-4">
                                 Orders Completed
                             </p>
                             <div className="flex items-center justify-center">
                                 <p className="text-4xl font-bold text-blue-500">
-                                    {user.haveEnrolled ? "1" : "0"}
+                                    {completedOrders.length}
                                 </p>
                             </div>
                         </div>
-                        <div className="bg-white rounded-lg shadow-lg p-6">
-                            <p className="text-lg font-bold mb-4 whitespace-nowrap">
+                        <div
+                            onClick={() => {
+                                setActiveButton("history");
+                            }}
+                            className={`bg-white cursor-pointer ${
+                                activeButton === "history"
+                                    ? " border-teal-400 bg-green-100"
+                                    : ""
+                            } rounded-lg shadow-lg p-4`}
+                        >
+                            <p className="text-sm lg:text-lg font-bold mb-4 whitespace-nowrap">
                                 History
                             </p>
                             <div className="flex items-center justify-center">
                                 <p className="text-4xl font-bold text-blue-500">
-                                    0
+                                    {orderHistory.length}
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="">
-                {/* {user.haveEnrolled && (
-                    <div className="my-8">
-                        <h2 className="text-2xl lg:px-8 font-bold">History</h2>
-                        <div className="grid gap-4">
-                            {enrolledCourses.map((course) => (
-                                <div
-                                    key={course.id}
-                                    className="rounded-lg p-4 flex justify-center shadow-lg"
-                                >
-                                    <div className="p-2 bg-white shadow-lg rounded-lg">
-                                        <div className="flex justify-center mb-4">
-                                            <img
-                                                src={course.image}
-                                                alt={course.name}
-                                                className="object-contain w-full h-52 overflow-clip md:h-64"
-                                            />
-                                        </div>
-                                        <h3 className="text-lg font-bold mb-2 text-gray-800">
-                                            {course.name}
-                                        </h3>
-                                        <p className="text-gray-600 mb-4">
-                                            Instructor: {course.instructor}
-                                        </p>
-                                        {course.upcomingSession && (
-                                            <p className="text-gray-600 mb-4">
-                                                Upcoming Session:{" "}
-                                                {course.upcomingSession}
-                                            </p>
-                                        )}
-                                        <div className="flex justify-center">
-                                            <button
-                                                className="bg-indigo-500 text-white px-4 py-2 rounded-lg"
-                                                onClick={() =>
-                                                    handleJoinSession(course.id)
-                                                }
-                                            >
-                                                JOIN SESSION
-                                            </button>
-                                        </div>
+            <div className="mb-8">
+                {activeButton === "pending" && (
+                    <div>
+                        <h2 className="text-2xl ms-10 p-4 font-bold">
+                            Pending Orders
+                        </h2>
+                        <div className="lg:w-4/5 lg:ps-10  grid grid-cols-2  lg:grid-cols-3 gap-2">
+                            {pendingOrders.map((order: any) => (
+                                <div key={order.id}>
+                                    <ProductCardForProfile
+                                        product={order}
+                                        state={"pending"}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {activeButton === "completed" && (
+                    <div>
+                        <h2 className="text-2xl ms-10 p-4 font-bold">
+                            Completed Orders
+                        </h2>
+                        <div className="lg:w-4/5 lg:ps-10  grid grid-cols-2  lg:grid-cols-3 gap-2">
+                            {completedOrders.map((order: any) => (
+                                <div key={order.id}>
+                                    <div key={order.id}>
+                                        <ProductCardForProfile
+                                            product={order}
+                                            state={"completed"}
+                                        />
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
-                )} */}
+                )}
+                {activeButton === "history" && (
+                    <div>
+                        <h2 className="text-2xl ms-10 p-4 font-bold">
+                            Order History
+                        </h2>
+                        <div className="lg:w-4/5 lg:ps-10  grid grid-cols-2  lg:grid-cols-3 gap-2">
+                            {orderHistory.map((order: any) => (
+                                <div key={order.id}>
+                                    <div key={order.id}>
+                                        <ProductCardForProfile
+                                            product={order}
+                                            state="completed"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
