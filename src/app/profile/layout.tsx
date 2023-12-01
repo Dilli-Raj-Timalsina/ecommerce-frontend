@@ -3,7 +3,13 @@ import React from "react";
 import SideBar from "@/components/UserProfile/SideBar";
 import { useContext } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import Navbar from "@/sections/Navbar/Navbar";
 const Layout = ({ children }: { children: React.ReactNode }) => {
+    const categories = [
+        { name: "Dashboard", url: "/profile" },
+        { name: "Wishlist", url: "/profile/wishlist" },
+        { name: "Setting", url: "/about" },
+    ];
     const { user } = useAuthContext();
     if (!user?.id) {
         return (
@@ -19,10 +25,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         );
     } else {
         return (
-            <section className="flex  ">
-                <SideBar />
+            <section>
+                <div>
+                    <Navbar categories={categories} />
+                </div>
+                <section className="flex  ">
+                    <SideBar />
 
-                <div className="bg-blue-50 flex-grow">{children}</div>
+                    <div className="bg-blue-50 pt-20  flex-grow">
+                        {children}
+                    </div>
+                </section>
             </section>
         );
     }

@@ -6,11 +6,16 @@ export default function UserLayout({
 }: {
     children: React.ReactNode;
 }) {
+    const categories = [
+        { name: "Home", url: "/" },
+        { name: "Products", url: "/shop-all" },
+        { name: "About Us", url: "/about" },
+        { name: "Contact", url: "/contact" },
+    ];
     return (
         <div className="w-screen  ">
             <div className="h-10 lg:h-16">
-                {/* @ts-expect-error Server Component */}
-                <Navbar />
+                <Navbar categories={categories} />
             </div>
             {children}
             <Footer />
