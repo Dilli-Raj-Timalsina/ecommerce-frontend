@@ -81,24 +81,26 @@ export default function ProductDetails({
         };
         getList();
     }, []);
-
-    useEffect(() => {
+    const wishListSetter = () => {
         const res = axios.patch(API_URL + `/api/v1/user/updateWishList`, {
             wishList: 121,
             userId: 26,
         });
         res.then((data) => {
             console.log(data);
-            setIsWished(!isWished);
+            if (data.data.status == "success") {
+                setIsWished(!isWished);
+            }
         }).catch((err) => {
             console.log(err);
         });
-    }, [isWished]);
+    };
+
     // Wishlist
 
     const checkoutHandler = (id: any) => {
         addItemToCart(id);
-        router.push("/checkout");
+        router.push("/Cart");
     };
 
     return (
@@ -194,7 +196,7 @@ export default function ProductDetails({
                             <div className="flex w-fit bg-orange-400 whitespace-nowrap hover:bg-orange-500 px-2 pe-4 py-1 border-green-400 rounded-md justify-center  items-center">
                                 <button
                                     onClick={() => {
-                                        setIsWished(!isWished);
+                                        wishListSetter();
                                     }}
                                     className=" w-32  p-2"
                                 >

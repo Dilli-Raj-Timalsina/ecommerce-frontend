@@ -17,10 +17,9 @@ const Wishlist = () => {
                 if (!res?.status) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
-                console.log("All wishlisted items in profile");
                 const resObj = res.data;
-                console.log(resObj);
                 if (resObj.status === "success") {
+                    console.log(resObj);
                     console.log("WIhslist item retirieved Successfully");
                     // return resObj.product;
                     setProducts(resObj.product);
@@ -33,13 +32,14 @@ const Wishlist = () => {
     }, []);
     return (
         <div>
-            <div className="lg:w-4/5  grid grid-cols-2  lg:grid-cols-4 gap-4 px-6 my-4 mb-0 ">
+            <h2 className="text-2xl ms-10 p-4 font-bold">Wishlist Items:</h2>
+            <div className="lg:w-4/5 ps-10  grid grid-cols-2  lg:grid-cols-3 gap-2">
                 {products &&
                     products?.map((prod, i: number) => {
                         return (
                             <div key={i}>
                                 <ProductCard
-                                    product={prod.product}
+                                    product={prod}
                                     category={prod.category}
                                 />
                             </div>

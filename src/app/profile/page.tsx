@@ -19,51 +19,7 @@ const ProfilePage = () => {
             </>
         );
     }
-    const handleEnroll = () => {
-        router.push("/account-profile/purchase");
-    };
-    const handleJoinSession = (id: any) => {
-        // router.push(`account-profile/join-session/${id}`);
-        console.log("join session");
-    };
-    const enrolledCourses = [
-        {
-            id: 1,
-            name: "15 Day Bootcamp on Tech Industry",
-            instructor: "Beginner to Intermediate",
-            image: "/banner.png",
-            upcomingSession: "June 15th, 2023 - 08:00 PM",
-        },
-    ];
 
-    const courses = [
-        {
-            id: 1,
-            name: "15 Day Bootcamp on Tech Industry",
-            price: 500,
-            enrolled: false,
-            title: "15 Day Bootcamp on Tech Industry",
-            rating: "4.5",
-            teacher: "Dilli Raj",
-            image: "/80005460.webp",
-            description:
-                "This session will be conducted by popular tech personalities from across the globe who proved their worth and showing their amazing skills. do not miss this golden opportunity which is being offered for free.Register now and mark the date as we are just 1 week away from it to happen",
-            syllabus: [
-                "Introduction to HTML",
-                "Introduction to CSS",
-                "Introduction to JavaScript",
-                "Responsive Web Design",
-                "React Basics",
-                "Vue Basics",
-            ],
-            benefits: [
-                "Learn the basics of web development",
-                "Create responsive web pages",
-                "Use popular frameworks like React and Vue",
-                "Get a solid foundation for a career in web development",
-            ],
-        },
-    ];
     return (
         <div className="flex flex-col flex-grow">
             <div className="py-10">

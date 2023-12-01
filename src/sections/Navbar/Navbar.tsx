@@ -7,30 +7,23 @@ import NotifyButton from "@/components/NotifyButton/NotifyButton";
 import UserProfile from "@/components/UserProfile/UserProfile";
 import SeachBar from "./SeachBar";
 
-export default function Navbar({ categories }: { categories: any }) {
+export default function Navbar({ categories }: { categories: any[] }) {
     return (
         <div className="top-0 navbar z-20  w-screen fixed flex items-center justify-between px-5 bg-base-100 text-neutral">
             <div className=" px-0 lg:px-8">
                 <div className="dropdown">
-                    <label tabIndex={0} className="btn btn-ghost lg:hidden ">
+                    <label tabIndex={0} className="btn btn-ghost lg:hidden">
                         <HamburgerMenu />
                     </label>
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content mt-3 z-20 p-2 shadow bg-base-100 rounded-box w-52"
                     >
-                        <li>
-                            <Link href={"/"}>Home</Link>
-                        </li>
-                        <li>
-                            <Link href={"/shop-all"}>Products</Link>
-                        </li>
-                        <li>
-                            <Link href={"/about"}>About Us</Link>
-                        </li>
-                        <li>
-                            <Link href={"/contact"}>Contact</Link>
-                        </li>
+                        {categories.map((category, index) => (
+                            <li key={index}>
+                                <Link href={category.url}>{category.name}</Link>
+                            </li>
+                        ))}
                     </ul>
                 </div>
                 {/* <Image alt="logo" src='/images/logo.jpeg' height={200} width={200} className="h-16 w-16" /> */}
