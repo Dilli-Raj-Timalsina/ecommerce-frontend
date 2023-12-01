@@ -63,11 +63,14 @@ export default function ProductDetails({
                 }
                 const resObj = res.data;
                 if (resObj.status === "success") {
+                    console.log(resObj);
                     console.log("WIhslist item retirieved Successfully");
                     // return resObj.product;
                     const found = resObj.product.find(
                         (pro: any) => pro.id === product.id
                     );
+                    console.log(found);
+
                     if (found) {
                         setIsWished(true);
                     }
@@ -81,7 +84,7 @@ export default function ProductDetails({
 
     useEffect(() => {
         const res = axios.patch(API_URL + `/api/v1/user/updateWishList`, {
-            wishList: 124,
+            wishList: 121,
             userId: 26,
         });
         res.then((data) => {
