@@ -18,7 +18,7 @@ const SeachBar = () => {
         SearchResultsAPIType[]
     >([]);
 
-    const router = useRouter();
+    // Searching
     useEffect(() => {
         const performSearch = async () => {
             if (!allProducts) return;

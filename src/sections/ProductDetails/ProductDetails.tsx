@@ -1,12 +1,16 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { CartIcon } from "@/assets/svg";
+import { API_URL } from "@/app/(root)/page";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import ToggleDetail from "@/components/ToggleDetail.tsx/ToggleDetail";
 import { useCartContext } from "@/context/CartContext";
 import Love from "@/assets/love";
+import axios from "axios";
+import { useAuthContext } from "@/context/AuthContext";
+import SvgCheck from "@/assets/check";
+import { useRouter } from "next/navigation";
 
 const productInfo = [
     {
@@ -31,9 +35,12 @@ export default function ProductDetails({
     relatedProducts: any[];
 }) {
     const { addItemToCart } = useCartContext();
-    const [wishlisted, setWishlisted] = useState<boolean>(product.wishlist);
+    const { user } = useAuthContext();
+    const [wishlist, setWishlist] = useState<any[]>([]);
+    const [itemQuantity, setItemQUantity] = useState<number>(1);
     const imgRef = useRef<HTMLImageElement | null>(null);
-    const handleAddWishlist = () => {};
+    const [isWished, setIsWished] = useState(false);
+    const router = useRouter();
     const handleSideImgClick = (image: string) => {
         console.log("Side image clicked");
 
@@ -42,8 +49,60 @@ export default function ProductDetails({
 			/${image}?t=${Date.now()}`;
         }
     };
-    const addToCartHandler = (id: any) => {
+    useEffect(() => {
+        const getList = async () => {
+            try {
+                const res = await axios.get(
+                    `${API_URL}/api/v1/user/getwishList/26`
+                );
+                if (!res?.status) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                console.log(user.id);
+                const resObj = res.data;
+                console.log(resObj);
+                if (resObj.status === "success") {
+                    console.log("WIhslist item retirieved Successfully");
+                    // return resObj.product;
+                    setWishlist(resObj.product.map((pro: any) => pro.id));
+                }
+            } catch (error) {
+                console.error("An error at getWishList occurred:", error);
+            }
+        };
+        getList();
+    }, []);
+
+    // const products: any[] = [];
+    console.log("Wihslist items are");
+    console.log(wishlist);
+    // setWishlist(products.map((product) => product.id));
+    useEffect(() => {
+        const res = axios.patch(API_URL + `/api/v1/user/updateWishList`, {
+            wishList: wishlist,
+            userId: 26,
+        });
+        res.then((data) => {
+            console.log(data);
+            setIsWished(!isWished);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, [wishlist]);
+    // Wishlist
+    const wishlistHandler = (e: any) => {
+        if (wishlist.find((productId) => productId === product.id)) {
+            setWishlist(wishlist.filter((el) => el !== product.id));
+            setIsWished(false);
+        } else {
+            setWishlist([...wishlist, product.id]);
+            setIsWished(true);
+        }
+    };
+
+    const checkoutHandler = (id: any) => {
         addItemToCart(id);
+        router.push("/checkout");
     };
 
     return (
@@ -114,29 +173,46 @@ export default function ProductDetails({
                         </p>
                         <div className="flex justify-between items-center">
                             <div className="flex items-center">
-                                <button className="px-2 py-1 text-base-100 bg-secondary border border-secondary">
+                                <button
+                                    onClick={() => {
+                                        if (itemQuantity > 1) {
+                                            setItemQUantity(itemQuantity - 1);
+                                        }
+                                    }}
+                                    className="px-2 py-1 text-base-100 bg-secondary border border-secondary"
+                                >
                                     -
                                 </button>
                                 <span className="px-4 border border-secondary">
-                                    2
+                                    {itemQuantity}
                                 </span>
-                                <button className="px-2 py-1 text-base-100 bg-secondary border border-secondary">
+                                <button
+                                    onClick={() => {
+                                        setItemQUantity(itemQuantity + 1);
+                                    }}
+                                    className="px-2 py-1 text-base-100 bg-secondary border border-secondary"
+                                >
                                     +
                                 </button>
                             </div>
-                            <div className="flex bg-orange-400 whitespace-nowrap hover:bg-orange-500 px-2 pe-4 py-1 border-green-400 rounded-md justify-center  items-center">
-                                <button className=" w-32  p-2">Wishlist</button>
-                                <Love />
+                            <div className="flex w-fit bg-orange-400 whitespace-nowrap hover:bg-orange-500 px-2 pe-4 py-1 border-green-400 rounded-md justify-center  items-center">
+                                <button
+                                    onClick={wishlistHandler}
+                                    className=" w-32  p-2"
+                                >
+                                    Wishlist
+                                </button>
+                                {isWished ? <SvgCheck /> : <Love />}
                             </div>
                             {/* className="flex cursor-pointer items-center btn w-32 border-solid justify-between border-secondary bg-primary text-secondary hover:opacity-80 hover:bg-primary hover:border-secondary" */}
                         </div>
                         <button
                             onClick={() => {
-                                addToCartHandler(product?.id);
+                                checkoutHandler(product?.id);
                             }}
                             className="btn w-full mt-4 text-sm bg-secondary text-base-100 hover:bg-neutral"
                         >
-                            Confirm Order
+                            Checkout
                         </button>
                         <div className="mt-6">
                             {productInfo?.map((e, i) => {
