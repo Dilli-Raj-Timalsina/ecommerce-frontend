@@ -12,12 +12,12 @@ const Wishlist = () => {
         const getList = async () => {
             try {
                 const res = await axios.get(
-                    `${API_URL}/api/v1/user/getwishList/${user.id}`
+                    `${API_URL}/api/v1/user/getWishList/26`
                 );
                 if (!res?.status) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
-                console.log(user.id);
+                console.log("All wishlisted items in profile");
                 const resObj = res.data;
                 console.log(resObj);
                 if (resObj.status === "success") {
