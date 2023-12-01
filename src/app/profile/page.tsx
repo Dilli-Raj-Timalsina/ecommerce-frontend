@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ProductCardForProfile from "@/components/ProductCard/ProductCardForProfile";

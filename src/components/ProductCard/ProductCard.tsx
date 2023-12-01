@@ -19,10 +19,10 @@ export default function ProductCard({
     product: ProductInterface;
     category: string;
 }) {
-    const { addItemToCart } = useCartContext();
+    const { modifyCart } = useCartContext();
 
-    const addToCartHandler = (id: any) => {
-        addItemToCart(id);
+    const addToCartHandler = (id: any, amt: any) => {
+        modifyCart(id, amt);
     };
 
     let image = product?.thumbNail,
@@ -57,7 +57,7 @@ export default function ProductCard({
                     </p>
                     <button
                         onClick={() => {
-                            addToCartHandler(product?.id);
+                            addToCartHandler(product?.id, 1);
                         }}
                         className="btn px-2 hover:bg-neutral  text-base-100 bg-secondary"
                     >

@@ -10,7 +10,8 @@ import { useCartContext } from "@/context/CartContext";
 import { useNotificationContext } from "@/context/NotificationContext";
 
 const Cart = () => {
-    const { deleteItemFromCart, cart } = useCartContext();
+    const { modifyCart, cart, setCart } = useCartContext();
+
     const { notifyUser } = useNotificationContext();
     const { user } = useAuthContext();
 
@@ -78,21 +79,21 @@ const Cart = () => {
 
     useEffect(() => {
         const getCartList = async () => {
+            console.log("Inside getCartList function");
             try {
                 const res =
-                    cart &&
-                    (await axios.post(
-                        `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/user/getCartItem`,
-                        {
-                            cart: cart,
-                        }
-                    ));
+                    // cart &&
+                    await axios.get(
+                        `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/user/getCartItem/${user.id}`
+                    );
                 if (!res?.status) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
                 const resObj = res.data;
+                console.log(resObj);
 
                 if (resObj.status === "success") {
+                    setCart(resObj.product);
                     setItemsList(resObj.product);
                 }
             } catch (error) {
@@ -100,7 +101,7 @@ const Cart = () => {
             }
         };
         getCartList();
-    }, [cart]);
+    }, []);
     console.log(itemsList);
     return (
         <>
@@ -171,8 +172,9 @@ const Cart = () => {
                                                             <a
                                                                 className="px-4 py-2 inline-block text-red-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer"
                                                                 onClick={() =>
-                                                                    deleteItemFromCart(
-                                                                        cartItem.id
+                                                                    modifyCart(
+                                                                        cartItem.id,
+                                                                        0
                                                                     )
                                                                 }
                                                             >
