@@ -38,8 +38,10 @@ export default function RegisterPage() {
     }
 
     function validatePassword(name: string) {
-        var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-        return re.test(name);
+        if (name.length >= 7) {
+            return true;
+        }
+        return false;
     }
 
     const submitHandler = (e: any) => {
