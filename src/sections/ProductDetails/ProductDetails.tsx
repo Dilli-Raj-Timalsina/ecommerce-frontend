@@ -205,8 +205,6 @@ export default function ProductDetails({
                                     <Love color="white" />
                                 )}
                             </button>
-
-                            {/* className="flex cursor-pointer items-center btn w-32 border-solid justify-between border-secondary bg-primary text-secondary hover:opacity-80 hover:bg-primary hover:border-secondary" */}
                         </div>
                         <button
                             onClick={() => {

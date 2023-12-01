@@ -26,7 +26,6 @@ export default function Navbar({ categories }: { categories: any[] }) {
                         ))}
                     </ul>
                 </div>
-                {/* <Image alt="logo" src='/images/logo.jpeg' height={200} width={200} className="h-16 w-16" /> */}
                 <Link
                     href={"/"}
                     className="btn hover:bg-transparent btn-ghost normal-case text-sm p-0 lg:p-3 lg:text-xl"

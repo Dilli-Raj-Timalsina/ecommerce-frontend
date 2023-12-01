@@ -41,7 +41,7 @@ const Love = ({ color }: LoveColor) => {
             width="40"
             height="40"
             fill={color}
-            className="bi bi-heart-fill bg-red-400"
+            className="bi bi-heart-fill "
             viewBox="0 0 16 16"
         >
             <path
