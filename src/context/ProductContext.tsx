@@ -1,7 +1,6 @@
 "use client";
 
 import axios from "axios";
-import { API_URL } from "@/app/(root)/page";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface IProductContext {
@@ -27,7 +26,8 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
         const getAllProducts = async () => {
             try {
                 const res = await axios.get(
-                    `${API_URL}/api/v1/product/getAllProducts`
+                    `${process.env
+                        .NEXT_PUBLIC_BACKEND!}/api/v1/product/getAllProducts`
                 );
                 const resObj = res?.data;
 

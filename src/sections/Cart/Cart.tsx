@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { API_URL } from "@/app/(root)/page";
 import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { useNotificationContext } from "@/context/NotificationContext";
@@ -31,7 +30,7 @@ const Cart = () => {
     const confirmOrder = async (locationText: string) => {
         try {
             const res = await axios.post(
-                `${API_URL}/api/v1/utils/notifyPurchase`,
+                `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/utils/notifyPurchase`,
                 {
                     email: user?.email,
                     location: locationText,
@@ -82,9 +81,12 @@ const Cart = () => {
             try {
                 const res =
                     cart &&
-                    (await axios.post(`${API_URL}/api/v1/user/getCartItem`, {
-                        cart: cart,
-                    }));
+                    (await axios.post(
+                        `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/user/getCartItem`,
+                        {
+                            cart: cart,
+                        }
+                    ));
                 if (!res?.status) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
@@ -132,7 +134,7 @@ const Cart = () => {
                                                                         width={
                                                                             200
                                                                         }
-                                                                        src={`/${
+                                                                        src={`${
                                                                             cartItem?.thumbNail ||
                                                                             null
                                                                         }`}
