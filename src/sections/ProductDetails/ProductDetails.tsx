@@ -2,7 +2,6 @@
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { API_URL } from "@/app/(root)/page";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import ToggleDetail from "@/components/ToggleDetail.tsx/ToggleDetail";
 import { useCartContext } from "@/context/CartContext";
@@ -56,7 +55,8 @@ export default function ProductDetails({
         const getList = async () => {
             try {
                 const res = await axios.get(
-                    `${API_URL}/api/v1/user/getWishList/26`
+                    `${process.env
+                        .NEXT_PUBLIC_BACKEND!}/api/v1/user/getWishList/26`
                 );
                 if (!res?.status) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
@@ -82,10 +82,13 @@ export default function ProductDetails({
         getList();
     }, []);
     const wishListSetter = () => {
-        const res = axios.patch(API_URL + `/api/v1/user/updateWishList`, {
-            wishList: 121,
-            userId: 26,
-        });
+        const res = axios.patch(
+            process.env.NEXT_PUBLIC_BACKEND! + `/api/v1/user/updateWishList`,
+            {
+                wishList: 121,
+                userId: 26,
+            }
+        );
         res.then((data) => {
             console.log(data);
             if (data.data.status == "success") {
@@ -120,8 +123,8 @@ export default function ProductDetails({
                     </ul>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2">
-                    <div className=" flex flex-col lg:flex-row items-center justify-between">
-                        <ul className="flex order-last  p-2 lg:flex-col gap-2">
+                    <div className=" flex flex-col lg:flex-row items-center  justify-between">
+                        <ul className="flex order-last  p-2 lg:flex-col gap-2 ">
                             {product?.sideImages.map(
                                 (image: string, i: number) => {
                                     return (
@@ -130,7 +133,7 @@ export default function ProductDetails({
                                             className="w-fit hover:shadow-md hover:shadow-orange-400 cursor-pointer hover:border-blue-400"
                                         >
                                             <Image
-                                                className="w-32 rounded-md h-32"
+                                                className="w-20 rounded-md h-20"
                                                 width={100}
                                                 height={100}
                                                 onClick={(e) => {
@@ -181,7 +184,7 @@ export default function ProductDetails({
                                 >
                                     -
                                 </button>
-                                <span className="px-4 border border-secondary">
+                                <span className="px-4 py-1 border border-secondary">
                                     {itemQuantity}
                                 </span>
                                 <button
@@ -193,17 +196,19 @@ export default function ProductDetails({
                                     +
                                 </button>
                             </div>
-                            <div className="flex w-fit bg-orange-400 whitespace-nowrap hover:bg-orange-500 px-2 pe-4 py-1 border-green-400 rounded-md justify-center  items-center">
-                                <button
-                                    onClick={() => {
-                                        wishListSetter();
-                                    }}
-                                    className=" w-32  p-2"
-                                >
-                                    Wishlist
-                                </button>
-                                {isWished ? <SvgCheck /> : <Love />}
-                            </div>
+
+                            <button
+                                onClick={() => {
+                                    wishListSetter();
+                                }}
+                            >
+                                {isWished ? (
+                                    <Love color="red" />
+                                ) : (
+                                    <Love color="white" />
+                                )}
+                            </button>
+
                             {/* className="flex cursor-pointer items-center btn w-32 border-solid justify-between border-secondary bg-primary text-secondary hover:opacity-80 hover:bg-primary hover:border-secondary" */}
                         </div>
                         <button

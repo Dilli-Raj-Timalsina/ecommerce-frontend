@@ -1,14 +1,17 @@
 import axios from "axios";
-import { API_URL } from "@/app/(root)/page";
 import ProductsByCategory from "@/sections/ProductsByCategory/ProductsByCategory";
 
 const getProductDetails = async (category: string) => {
     try {
         const res =
             category === "shop-all"
-                ? await axios.get(`${API_URL}/api/v1/product/getAllProducts`)
+                ? await axios.get(
+                      `${process.env
+                          .NEXT_PUBLIC_BACKEND!}/api/v1/product/getAllProducts`
+                  )
                 : await axios.get(
-                      `${API_URL}/api/v1/product/getProductByCategory/${category}`
+                      `${process.env
+                          .NEXT_PUBLIC_BACKEND!}/api/v1/product/getProductByCategory/${category}`
                   );
         if (!res.status) {
             throw new Error(`HTTP error! Status: ${res.status}`);

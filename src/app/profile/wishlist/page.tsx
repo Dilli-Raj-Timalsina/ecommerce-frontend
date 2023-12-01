@@ -4,7 +4,7 @@ import ProductCard from "@/components/ProductCard/ProductCard";
 import { useState, useEffect } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import axios from "axios";
-import { API_URL } from "@/app/(root)/page";
+
 const Wishlist = () => {
     const [products, setProducts] = useState<any[]>([]);
     const { user } = useAuthContext();
@@ -12,7 +12,8 @@ const Wishlist = () => {
         const getList = async () => {
             try {
                 const res = await axios.get(
-                    `${API_URL}/api/v1/user/getWishList/26`
+                    `${process.env
+                        .NEXT_PUBLIC_BACKEND!}/api/v1/user/getWishList/26`
                 );
                 if (!res?.status) {
                     throw new Error(`HTTP error! Status: ${res.status}`);

@@ -5,8 +5,6 @@ import Testimonials from "@/sections/Home/Testimonials/Testimonials";
 import Banners from "@/sections/Home/Banners/Banners";
 import Categories from "@/sections/Home/Categories/Categories";
 
-export const API_URL = "https://ecom-api-y3aj.onrender.com";
-
 const Home = async () => {
     return (
         <div className="flex min-h-screen flex-col items-center justify-between bg-base-100 ">
