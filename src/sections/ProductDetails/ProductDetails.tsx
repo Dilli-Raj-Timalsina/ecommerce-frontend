@@ -1,11 +1,16 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { CartIcon } from "@/assets/svg";
+import { API_URL } from "@/app/(root)/page";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import ToggleDetail from "@/components/ToggleDetail.tsx/ToggleDetail";
 import { useCartContext } from "@/context/CartContext";
+import Love from "@/assets/love";
+import axios from "axios";
+import { useAuthContext } from "@/context/AuthContext";
+import SvgCheck from "@/assets/check";
+import { useRouter } from "next/navigation";
 
 const productInfo = [
     {
@@ -29,12 +34,68 @@ export default function ProductDetails({
     product: any;
     relatedProducts: any[];
 }) {
-    const imgRef = useRef(null);
-
     const { addItemToCart } = useCartContext();
+    const { user } = useAuthContext();
+    // const [wishlist, setWishlist] = useState<number | null>(null);
+    const [itemQuantity, setItemQUantity] = useState<number>(1);
+    const imgRef = useRef<HTMLImageElement | null>(null);
+    const [isWished, setIsWished] = useState(false);
+    const router = useRouter();
 
-    const addToCartHandler = (id: any) => {
+    console.log(product);
+
+    const handleSideImgClick = (image: string) => {
+        console.log("Side image clicked");
+
+        if (imgRef.current) {
+            imgRef.current.src = `https://9somerandom.s3.ap-south-1.amazonaws.com
+			/${image}?t=${Date.now()}`;
+        }
+    };
+    useEffect(() => {
+        const getList = async () => {
+            try {
+                const res = await axios.get(
+                    `${API_URL}/api/v1/user/getWishList/26`
+                );
+                if (!res?.status) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                const resObj = res.data;
+                if (resObj.status === "success") {
+                    console.log("WIhslist item retirieved Successfully");
+                    // return resObj.product;
+                    const found = resObj.product.find(
+                        (pro: any) => pro.id === product.id
+                    );
+                    if (found) {
+                        setIsWished(true);
+                    }
+                }
+            } catch (error) {
+                console.error("An error at getWishList occurred:", error);
+            }
+        };
+        getList();
+    }, []);
+
+    useEffect(() => {
+        const res = axios.patch(API_URL + `/api/v1/user/updateWishList`, {
+            wishList: 124,
+            userId: 26,
+        });
+        res.then((data) => {
+            console.log(data);
+            setIsWished(!isWished);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, [isWished]);
+    // Wishlist
+
+    const checkoutHandler = (id: any) => {
         addItemToCart(id);
+        router.push("/checkout");
     };
 
     return (
@@ -54,12 +115,37 @@ export default function ProductDetails({
                     </ul>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2">
-                    <div className="">
-                        <div className="image-section flex justify-center items-center">
+                    <div className=" flex flex-col lg:flex-row items-center justify-between">
+                        <ul className="flex order-last  p-2 lg:flex-col gap-2">
+                            {product?.sideImages.map(
+                                (image: string, i: number) => {
+                                    return (
+                                        <li
+                                            key={i}
+                                            className="w-fit hover:shadow-md hover:shadow-orange-400 cursor-pointer hover:border-blue-400"
+                                        >
+                                            <Image
+                                                className="w-32 rounded-md h-32"
+                                                width={100}
+                                                height={100}
+                                                onClick={(e) => {
+                                                    handleSideImgClick(image);
+                                                }}
+                                                src={`https://9somerandom.s3.ap-south-1.amazonaws.com
+									/${image}`}
+                                                alt={product.title}
+                                            ></Image>{" "}
+                                        </li>
+                                    );
+                                }
+                            )}
+                        </ul>
+                        <div className="image-section flex p-4 justify-center items-center">
                             <div>
                                 {/* eslint-disable @next/next/no-img-element */}
-                                <Image
+                                <img
                                     ref={imgRef}
+                                    className=" h-1/2 lg:h-4/5-screen "
                                     alt="Product Image"
                                     src={product?.thumbNail}
                                     width={imageProps.width}
@@ -80,31 +166,48 @@ export default function ProductDetails({
                         </p>
                         <div className="flex justify-between items-center">
                             <div className="flex items-center">
-                                <button className="px-2 py-1 text-base-100 bg-secondary border border-secondary">
+                                <button
+                                    onClick={() => {
+                                        if (itemQuantity > 1) {
+                                            setItemQUantity(itemQuantity - 1);
+                                        }
+                                    }}
+                                    className="px-2 py-1 text-base-100 bg-secondary border border-secondary"
+                                >
                                     -
                                 </button>
                                 <span className="px-4 border border-secondary">
-                                    2
+                                    {itemQuantity}
                                 </span>
-                                <button className="px-2 py-1 text-base-100 bg-secondary border border-secondary">
+                                <button
+                                    onClick={() => {
+                                        setItemQUantity(itemQuantity + 1);
+                                    }}
+                                    className="px-2 py-1 text-base-100 bg-secondary border border-secondary"
+                                >
                                     +
                                 </button>
                             </div>
-                            <div className="flex bg-orange-400 hover:bg-orange-500 px-2 py-1 border-green-400 rounded-md items-center">
-                                <button className=" w-32  p-2">
-                                    Add To Cart
+                            <div className="flex w-fit bg-orange-400 whitespace-nowrap hover:bg-orange-500 px-2 pe-4 py-1 border-green-400 rounded-md justify-center  items-center">
+                                <button
+                                    onClick={() => {
+                                        setIsWished(!isWished);
+                                    }}
+                                    className=" w-32  p-2"
+                                >
+                                    Wishlist
                                 </button>
-                                <CartIcon />
+                                {isWished ? <SvgCheck /> : <Love />}
                             </div>
                             {/* className="flex cursor-pointer items-center btn w-32 border-solid justify-between border-secondary bg-primary text-secondary hover:opacity-80 hover:bg-primary hover:border-secondary" */}
                         </div>
                         <button
                             onClick={() => {
-                                addToCartHandler(product?.id);
+                                checkoutHandler(product?.id);
                             }}
                             className="btn w-full mt-4 text-sm bg-secondary text-base-100 hover:bg-neutral"
                         >
-                            Confirm Order
+                            Checkout
                         </button>
                         <div className="mt-6">
                             {productInfo?.map((e, i) => {
