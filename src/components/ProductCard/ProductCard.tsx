@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCartContext } from "@/context/CartContext";
+import { useAuthContext } from "@/context/AuthContext";
 
 interface ProductInterface {
     image: string;
@@ -19,9 +21,14 @@ export default function ProductCard({
     product: ProductInterface;
     category: string;
 }) {
+    const router = useRouter();
+    const { user } = useAuthContext();
     const { modifyCart } = useCartContext();
 
     const addToCartHandler = (id: any, amt: any) => {
+        if (!user?.id) {
+            router.push("/login");
+        }
         modifyCart(id, amt);
     };
 
@@ -50,9 +57,21 @@ export default function ProductCard({
                 />
             </Link>
             <div className="card-body py-4 px-2 ">
-                <p className="line-clamp-1">{name}</p>
+                <p
+                    className="line-clamp-1 cursor-pointer"
+                    onClick={() => {
+                        router.push(`/${category}/${id}`);
+                    }}
+                >
+                    {name}
+                </p>
                 <div className="flex items-center justify-between">
-                    <p className="line-clamp-1 md:font-semibold">
+                    <p
+                        className="line-clamp-1 md:font-semibold cursor-pointer"
+                        onClick={() => {
+                            router.push(`/${category}/${id}`);
+                        }}
+                    >
                         ${price.toString()}
                     </p>
                     <button

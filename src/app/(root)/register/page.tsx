@@ -1,11 +1,9 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-
-// TODO: Frontend verification
+import BounceSpinners from "@/components/Spinners/BounceSpinner";
 
 export default function RegisterPage() {
     const { setError, registerUser } = useAuthContext();
@@ -15,7 +13,6 @@ export default function RegisterPage() {
         name: "",
         email: "",
         password: "",
-        // promotions: 'unchecked',
     };
     const [formData, setFormData] = useState(initialState);
     const formDataHandler = (e: any) =>
@@ -23,7 +20,6 @@ export default function RegisterPage() {
 
     const checkboxChange = (e: any) => {
         console.log(e.target.checked);
-        // setFormData({ ...formData, promotions: e.target.checked ? 'checked' : 'unchecked' })
     };
 
     function validateEmail(email: string) {
@@ -38,13 +34,13 @@ export default function RegisterPage() {
     }
 
     function validatePassword(name: string) {
-        if (name.length >= 7) {
+        if (name.length >= 5) {
             return true;
         }
         return false;
     }
 
-    const submitHandler = (e: any) => {
+    const submitHandler = async (e: any) => {
         e.preventDefault();
         setLoading(true);
         if (!validatePassword(formData.password)) {
@@ -65,7 +61,7 @@ export default function RegisterPage() {
             return;
         }
 
-        registerUser(formData);
+        await registerUser(formData);
         setLoading(false);
         return;
     };
@@ -160,7 +156,11 @@ export default function RegisterPage() {
                                 type="submit"
                                 className="btn bg-secondary hover:bg-neutral btn-primary mb-4 text-base-100"
                             >
-                                Sign Up
+                                {loading ? (
+                                    <BounceSpinners size={"w-4 h-4"} />
+                                ) : (
+                                    <span>Sign Up</span>
+                                )}
                             </button>
                         </div>
                     </form>

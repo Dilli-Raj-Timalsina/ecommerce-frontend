@@ -72,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 console.log(data);
             }
         } catch {
-            setError("Error: User Register Failed!");
+            setError("User Already Exist with Email !");
         }
     };
 
@@ -94,7 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 console.log(data);
             }
         } catch {
-            setError("Error User Login Failed!");
+            setError("Incorrect Email or Password !");
         }
     };
 

@@ -22,11 +22,11 @@ export default function Category({
         <div className="w-screen text-white">
             <div className="flex md:px-16 px-8 w-full items-center justify-between">
                 <h1 className="text-gray-800 font-bold text-2xl hover:shadow-sm">
-                    Puja Items
+                    {category}
                 </h1>
 
                 <Link
-                    className="text-white  bg-orange-400 rounded-md  p-2 px-4 hover:bg-orange-500 text-sm cursor-pointer"
+                    className="text-white  bg-orange-600 rounded-md  p-2 px-4 hover:bg-orange-500 text-sm cursor-pointer"
                     href={`/${category}`}
                 >
                     View All
