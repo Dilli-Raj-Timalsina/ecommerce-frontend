@@ -38,9 +38,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             console.log(resObj);
             if (resObj.status === "success") {
                 if (amt > 0) {
-                    showModal("Item successfully added to cart", "Info");
+                    showModal("Added to Cart", "Info");
                 } else {
-                    showModal("Item Successfully Removed from Cart", "Info");
+                    showModal("Removed from Cart", "Info");
                 }
                 try {
                     const res =
