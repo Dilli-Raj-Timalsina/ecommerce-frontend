@@ -32,9 +32,7 @@ export default function ProductDetails({
     product: any;
     relatedProducts: any[];
 }) {
-    const { addItemToCart } = useCartContext();
-    const { user } = useAuthContext();
-    // const [wishlist, setWishlist] = useState<number | null>(null);
+    const { modifyCart } = useCartContext();
     const [itemQuantity, setItemQUantity] = useState<number>(1);
     const imgRef = useRef<HTMLImageElement | null>(null);
     const [isWished, setIsWished] = useState(false);
@@ -101,7 +99,7 @@ export default function ProductDetails({
     // Wishlist
 
     const checkoutHandler = (id: any) => {
-        addItemToCart(id);
+        modifyCart(id, itemQuantity);
         router.push("/Cart");
     };
 
