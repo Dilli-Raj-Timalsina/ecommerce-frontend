@@ -39,29 +39,47 @@ const SeachBar = () => {
         setSearchItem(item);
     };
     return (
-        <div className="form-control relative  hidden lg:flex ml-32 ">
-            <form className="flex items-center">
+        <div className="dropdown">
+            <div className="relative w-80 md:w-128">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg
+                        className="w-4 h-4 text-gray-500 "
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                    >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                    </svg>
+                </div>
                 <input
                     type="search"
+                    id="default-search"
+                    className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 focus:outline-none rounded-2xl bg-gray-50 focus:drop-shadow-xl "
+                    placeholder="search..."
                     value={searchItem}
                     onClick={() => setShowModel(!showModel)}
                     onChange={(e) => handleOnChange(e.target.value)}
-                    placeholder="Search..."
-                    className="input text-gray-600 focus:outline-none text-sm hover:bg-primary focus:border-neutral hover:border-neutral border-secondary focus:bg-primary bg-white  rounded-l-3xl rounded-r-none input-bordered  px-20 w-full"
-                    style={{ backgroundImage: "none" }}
                 />
                 <button
                     type="submit"
-                    className="btn bg-secondary hover:bg-purple-400 text-base-100 btn-ghost   rounded-l-none px-6  rounded-r-3xl"
+                    className="hidden md:flex text-white absolute right-2.5 bottom-2.5 bg-secondary hover:bg-purple-500 hover:drop-shadow-md font-medium rounded-lg text-sm px-4 py-2  "
                 >
-                    <SearchIcon />
+                    Search
                 </button>
-            </form>
+            </div>
+
             {searchResultsAPI.length >= 1 && (
                 <div
-                    className={`absolute top-full left-0   ${
+                    className={`absolute top-full  dropdown-content dropdown-start   ${
                         showModel ? "block" : "hidden"
-                    } rounded-lg  w-full h-fit shadow-lg  z-50 bg-white  overflow-y-auto`}
+                    } rounded-sm  w-full h-fit shadow-lg  z-50 bg-white  overflow-y-auto`}
                 >
                     <ul className="drop-shadow-sm max-h-96 overflow-y-auto">
                         {searchResultsAPI.slice(0, 5).map((result, index) => (

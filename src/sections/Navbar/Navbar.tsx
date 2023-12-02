@@ -9,10 +9,13 @@ import SeachBar from "./SeachBar";
 
 export default function Navbar({ categories }: { categories: any[] }) {
     return (
-        <div className="top-0 navbar z-20  w-screen fixed flex items-center justify-between px-5 bg-base-100 text-neutral">
+        <div className="top-0 navbar z-20  w-screen fixed flex flex-row items-center justify-between lg:px-5 pl-2 pr-2 bg-base-100 text-neutral">
             <div className=" px-0 lg:px-8">
                 <div className="dropdown">
-                    <label tabIndex={0} className="btn btn-ghost lg:hidden">
+                    <label
+                        tabIndex={0}
+                        className="btn btn-ghost p-0 px-2 lg:hidden"
+                    >
                         <HamburgerMenu />
                     </label>
                     <ul
@@ -28,7 +31,7 @@ export default function Navbar({ categories }: { categories: any[] }) {
                 </div>
                 <Link
                     href={"/"}
-                    className="btn hover:bg-transparent btn-ghost normal-case text-sm p-0 lg:p-3 lg:text-xl"
+                    className="btn hover:bg-transparent btn-ghost normal-case text-sm p-0 lg:p-3 lg:text-xl "
                 >
                     Ushopie
                 </Link>
@@ -36,7 +39,7 @@ export default function Navbar({ categories }: { categories: any[] }) {
 
             <SeachBar />
 
-            <div className="px-1">
+            <div className="px-1 hidden lg:flex">
                 <LanguageDropdown />
                 <CartButton />
                 <NotifyButton />
