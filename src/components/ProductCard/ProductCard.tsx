@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCartContext } from "@/context/CartContext";
 import { useAuthContext } from "@/context/AuthContext";
+import { useState } from "react";
 
 interface ProductInterface {
     image: string;
@@ -29,6 +30,7 @@ export default function ProductCard({
         if (!user?.id) {
             router.push("/login");
         }
+
         modifyCart(id, amt);
     };
 

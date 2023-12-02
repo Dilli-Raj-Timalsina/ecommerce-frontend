@@ -45,7 +45,7 @@ export default function ProductDetails({
 
         if (imgRef.current) {
             imgRef.current.src = `https://9somerandom.s3.ap-south-1.amazonaws.com
-			/${image}?t=${Date.now()}`;
+			/${image}`;
         }
     };
     useEffect(() => {
@@ -98,8 +98,8 @@ export default function ProductDetails({
 
     // Wishlist
 
-    const checkoutHandler = (id: any) => {
-        modifyCart(id, itemQuantity);
+    const checkoutHandler = async (id: any) => {
+        await modifyCart(id, itemQuantity);
         router.push("/Cart");
     };
 

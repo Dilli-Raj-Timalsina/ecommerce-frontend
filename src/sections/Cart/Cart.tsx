@@ -55,6 +55,7 @@ const Cart = () => {
             console.error("An error occurred:", error);
         }
     };
+    // for testinng only
 
     const submitHandler = (e: any) => {
         e.preventDefault();
@@ -119,8 +120,8 @@ const Cart = () => {
                         <div className="flex flex-col md:flex-row gap-4">
                             <main className="md:w-3/4">
                                 <article className="border border-gray-200 bg-white shadow-sm rounded mb-5 p-3 lg:p-5">
-                                    {itemsList?.length > 0 &&
-                                        itemsList?.map((cartItem, i) => (
+                                    {cart?.length > 0 &&
+                                        cart?.map((cartItem, i) => (
                                             <div key={i}>
                                                 <div className="flex flex-wrap lg:flex-row gap-5  mb-4">
                                                     <div className="w-full lg:w-2/5 xl:w-2/4">
@@ -135,10 +136,7 @@ const Cart = () => {
                                                                         width={
                                                                             200
                                                                         }
-                                                                        src={`${
-                                                                            cartItem?.thumbNail ||
-                                                                            null
-                                                                        }`}
+                                                                        src={`${cartItem?.thumbNail}`}
                                                                         alt={
                                                                             cartItem.title
                                                                         }
