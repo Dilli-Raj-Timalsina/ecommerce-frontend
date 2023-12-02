@@ -55,6 +55,7 @@ const Cart = () => {
             console.error("An error occurred:", error);
         }
     };
+    // for testinng only
 
     const submitHandler = (e: any) => {
         e.preventDefault();
