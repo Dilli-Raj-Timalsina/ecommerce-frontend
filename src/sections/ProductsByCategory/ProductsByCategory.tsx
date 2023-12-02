@@ -256,15 +256,15 @@ export default function ProductsByCategory({
                         })}
                 </div>
             </div>
-            <div className="flex m-6 mb-10 text-xl text-white gap-5 underline item-center justify-center">
+            <div className="flex mt-16 mb-10 text-lg text-white   item-center justify-around">
                 <button
-                    className="bg-secondary px-3 py-2 rounded-lg"
+                    className="bg-orange-600 hover:bg-orange-500 px-4 py-1 rounded-lg"
                     onClick={handlePrev}
                 >
                     Prev
                 </button>
                 <button
-                    className="bg-secondary px-3 rounded-lg"
+                    className="bg-orange-600 hover:bg-orange-500 px-4 py-1 rounded-lg"
                     onClick={handleNext}
                 >
                     Next

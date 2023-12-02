@@ -1,19 +1,18 @@
 "use client";
+
 import React from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
 import ProductCardForProfile from "@/components/ProductCard/ProductCardForProfile";
-import ProductContext, { useProductContext } from "@/context/ProductContext";
+import { useProductContext } from "@/context/ProductContext";
+
 const ProfilePage = () => {
     const [pendingOrders, setPendingOrders] = useState<any[]>([]);
     const [completedOrders, setCompletedOrders] = useState<any[]>([]);
     const [orderHistory, setOrderHistory] = useState<any[]>([]);
-    const [activeButton, setActiveButton] = useState("pending"); //
+    const [activeButton, setActiveButton] = useState("pending");
     const { allProducts } = useProductContext();
     const { user } = useAuthContext();
-    const router = useRouter();
 
     useEffect(() => {
         const fetchPendingOrders = async () => {
@@ -194,4 +193,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-// lets make a dashboard that has 3 modern and catchy boxes with A+ Score, Enrolled Courses and Course Completed

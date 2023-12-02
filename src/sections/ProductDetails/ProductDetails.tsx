@@ -106,7 +106,7 @@ export default function ProductDetails({
     return (
         <div className=" w-screen">
             <div className="lg:mx-20">
-                <div className="text-sm breadcrumbs my-8">
+                <div className=" breadcrumbs my-8 pl-2 md:pl-0 font-medium text-base">
                     <ul>
                         <li>
                             <Link href={`/`}>Home</Link>
@@ -233,7 +233,7 @@ export default function ProductDetails({
                         <span className="pl-2 pr-3 bg-secondary rounded-lg mr-2"></span>{" "}
                         Related Items
                     </h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 py-10 w-full">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 py-10 w-full">
                         {relatedProducts &&
                             Object(relatedProducts)?.map(
                                 (product: any, i: any) => {

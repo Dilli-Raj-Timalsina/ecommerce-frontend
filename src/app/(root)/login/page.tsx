@@ -6,8 +6,8 @@ import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import FacebookSigninButton from "@/components/SignInButtons/FacebookSigninButton";
 import GoogleSigninButton from "@/components/SignInButtons/GoogleSigninButton";
+import BounceSpinners from "@/components/Spinners/BounceSpinner";
 
-// TODO: Frontend verification
 export default function LoginPage() {
     const { setError, loginUser } = useAuthContext();
     const initialState = {
@@ -26,10 +26,9 @@ export default function LoginPage() {
     }
 
     function validatePassword(name: string) {
-        var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-        return re.test(name);
+        return name.length >= 5;
     }
-    const submitHandler = (e: any) => {
+    const submitHandler = async (e: any) => {
         e.preventDefault();
         setLoading(true);
         if (!validatePassword(formData.password)) {
@@ -45,7 +44,7 @@ export default function LoginPage() {
             return;
         }
 
-        loginUser(formData);
+        await loginUser(formData);
         setLoading(false);
     };
 
@@ -108,17 +107,21 @@ export default function LoginPage() {
                                 type="submit"
                                 className="btn btn-primary hover:bg-neutral bg-secondary text-base-100"
                             >
-                                Login
+                                {loading ? (
+                                    <BounceSpinners size={"w-4 h-4"} />
+                                ) : (
+                                    <span>Login</span>
+                                )}
                             </button>
                         </div>
                     </form>
                     <p>or login with</p>
-                    <div className="flex w-full pb-8 gap-4">
+                    <div className="flex  w-full justify-around items-center">
                         <GoogleSigninButton />
                         <FacebookSigninButton />
                     </div>
                 </div>
-                <div className="absolute h-4/5 md:h-full md:relative md:w-3/5">
+                <div className="absolute h-4/5 md:h-full md:relative md:w-3/5 hidden md:flex">
                     <Image
                         src="/images/login.png"
                         height={1500}
