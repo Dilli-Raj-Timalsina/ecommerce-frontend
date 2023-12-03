@@ -5,6 +5,7 @@ import ErrorMessage from "@/components/Spinners/ErrorMessage";
 import SuccessMessage from "@/components/Spinners/SuccessMessage";
 import UploadBox from "@/components/Admin/CreateHeroComponets/UploadBox";
 import UploadTile from "@/components/Admin/CreateHeroComponets/UploadTitle";
+import CategoryBox from "@/components/Admin/CreateHeroComponets/CategoryBox";
 
 type Hero = {
     h1title: string;
@@ -22,6 +23,9 @@ export default function CreateProductBox() {
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [category1, setCategory1] = useState("clothes");
+    const [category2, setCategory2] = useState("clothes");
+    const [category3, setCategory3] = useState("clothes");
     const [imageFirstNail, setImageFirstNail] = useState<File | null>(null);
     const [imageSecondNail, setImageSecondNail] = useState<File | null>(null);
     const [imageThirdNail, setImageThirdNail] = useState<File | null>(null);
@@ -36,6 +40,17 @@ export default function CreateProductBox() {
         imageSecond: "",
         imageThird: "",
     });
+
+    const handleCategoryChange =
+        (name: string) => (event: React.ChangeEvent<HTMLSelectElement>) => {
+            if (name == "category1") {
+                setCategory1(event.target.value);
+            } else if (name == "category2") {
+                setCategory2(event.target.value);
+            } else {
+                setCategory3(event.target.value);
+            }
+        };
 
     const handleInput = (
         event: React.ChangeEvent<
@@ -83,84 +98,79 @@ export default function CreateProductBox() {
             }
         };
 
-    const uploadAllImage = async (
-        thumbnailURL: string,
-        sideImageURL: string[]
-    ) => {
-        // for (let i = 0; i < sideImageURL.length; i++) {
-        //     if (i == 0) {
-        //         await fetch(thumbnailURL, {
-        //             method: "PUT",
-        //             headers: {
-        //                 "Content-Type": "image/*",
-        //             },
-        //             body: thumbnail,
-        //         });
-        //     } else {
-        //         await fetch(sideImageURL[i - 1], {
-        //             method: "PUT",
-        //             headers: {
-        //                 "Content-Type": "image/*",
-        //             },
-        //             body: sideImage![i - 1],
-        //         });
-        //     }
-        // }
+    const uploadAllImage = async (urls: string[]) => {
+        for (let i = 0; i < urls.length; i++) {
+            if (i == 0) {
+                await fetch(urls[i], {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "image/*",
+                    },
+                    body: imageFirstNail,
+                });
+            } else if (i == 1) {
+                await fetch(urls[i], {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "image/*",
+                    },
+                    body: imageSecondNail,
+                });
+            } else {
+                await fetch(urls[i], {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "image/*",
+                    },
+                    body: imageThirdNail,
+                });
+            }
+        }
     };
 
     //handle the submission of thE form:
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(imageFirstNail, imageSecondNail, imageThirdNail);
-        console.log(
-            product.h1title,
-            product.h1subTitle,
-            product.h2title,
-            product.h2subTitle,
-            product.h3title,
-            product.h3subTitle,
-            product.imageFirst,
-            product.imageSecond,
-            product.imageThird
-        );
+        setLoading(true);
+        try {
+            const res = await fetch(
+                process.env.NEXT_PUBLIC_BACKEND! +
+                    process.env.NEXT_PUBLIC_CREATEHERO,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        ...product,
+                        category1,
+                        category2,
+                        category3,
+                    }),
+                }
+            );
 
-        // setLoading(true);
-        // try {
-        //     const res = await fetch(
-        //         process.env.NEXT_PUBLIC_BACKEND! +
-        //             process.env.NEXT_PUBLIC_CREATEPRODUCT,
-        //         {
-        //             method: "POST",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //             },
-        //             body: JSON.stringify({
-        //                 ...product,
-        //             }),
-        //         }
-        //     );
+            const result = await res.json();
+            if (res.ok) {
+                console.log(result);
+                await uploadAllImage(result.urls);
+                setLoading(false);
+                setSuccess(true);
 
-        //     const result = await res.json();
-        //     if (res.ok) {
-        //         console.log(result);
-        //         await uploadAllImage(result.thumbnail, result.urls);
-        //         setLoading(false);
-        //         setSuccess(true);
-
-        //         setTimeout(() => {
-        //             setSuccess(false);
-        //         }, 4000);
-        //     } else {
-        //         setError(true);
-        //         setTimeout(() => {
-        //             setError(false);
-        //         }, 4000);
-        //         setLoading(false);
-        //     }
-        // } catch (err) {
-        //     setLoading(false);
-        //     console.error(err);
-        // }
+                setTimeout(() => {
+                    setSuccess(false);
+                }, 4000);
+            } else {
+                setError(true);
+                setTimeout(() => {
+                    setError(false);
+                }, 4000);
+                setLoading(false);
+            }
+        } catch (err) {
+            setLoading(false);
+            console.error(err);
+        }
     };
 
     return (
@@ -177,6 +187,8 @@ export default function CreateProductBox() {
                         <UploadTile
                             title={product.h1title}
                             subTitle={product.h1subTitle}
+                            headingName={"h1title"}
+                            subHeadingName={"h1subTitle"}
                             handleInput={handleInput}
                             heading={"Heading 1"}
                             subHeading={"SubHeading 1"}
@@ -184,6 +196,8 @@ export default function CreateProductBox() {
                         <UploadTile
                             title={product.h2title}
                             subTitle={product.h2subTitle}
+                            headingName={"h2title"}
+                            subHeadingName={"h2subTitle"}
                             handleInput={handleInput}
                             heading={"Heading 2"}
                             subHeading={"SubHeading 2"}
@@ -191,10 +205,29 @@ export default function CreateProductBox() {
                         <UploadTile
                             title={product.h3title}
                             subTitle={product.h3subTitle}
+                            headingName={"h3title"}
+                            subHeadingName={"h3subTitle"}
                             handleInput={handleInput}
                             heading={"Heading 3"}
                             subHeading={"SubHeading 3"}
                         ></UploadTile>
+                    </div>
+                    <div className="flex items-center justify-around w-full my-5">
+                        <CategoryBox
+                            category={category1}
+                            handleCategoryChange={handleCategoryChange}
+                            name={"category1"}
+                        ></CategoryBox>
+                        <CategoryBox
+                            category={category2}
+                            handleCategoryChange={handleCategoryChange}
+                            name={"category2"}
+                        ></CategoryBox>
+                        <CategoryBox
+                            category={category3}
+                            handleCategoryChange={handleCategoryChange}
+                            name={"category3"}
+                        ></CategoryBox>
                     </div>
                     <div className="flex ">
                         <UploadBox

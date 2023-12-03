@@ -53,6 +53,14 @@ export default function DashBoardSideBar(props: DashBoardSideBarProps) {
                     Create Product
                 </button>
                 <button
+                    className={`text-base text-gray-600 mt-1 pl-4 md:pl-4 hover:bg-slate-50 hover:text-gray-700`}
+                    onClick={() => {
+                        router.push("/admin/create-hero");
+                    }}
+                >
+                    Create Hero
+                </button>
+                <button
                     className={`text-base text-gray-600 mt-1 mb-1 pl-4 hover:bg-slate-50 hover:text-gray-700`}
                     onClick={() => {
                         router.push("/admin/edit-product");
