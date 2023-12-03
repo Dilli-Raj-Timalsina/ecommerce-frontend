@@ -316,6 +316,7 @@ export const ProfileIcon = () => {
             xmlns="http://www.w3.org/2000/svg"
             width="22px"
             height="22px"
+            className="w-6 h-6 md:w-7 md:h-7"
             viewBox="796 796 200 200"
             enableBackground="new 796 796 200 200"
         >

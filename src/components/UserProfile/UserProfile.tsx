@@ -2,13 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-// import { useSession } from "next-auth/react";
 import SignoutButton from "@/components/SignoutButton";
 import { ProfileIcon } from "@/assets/svg";
 import { useAuthContext } from "@/context/AuthContext";
 
 export default function UserProfile() {
-    // const { data } = useSession()
     const { user } = useAuthContext();
 
     return (
@@ -47,14 +45,14 @@ export default function UserProfile() {
                     </ul>
                 </div>
             ) : (
-                <ul className="hidden md:menu menu-horizontal">
+                <ul className=" md:menu menu-horizontal">
                     <li>
                         <Link
                             href={"/login"}
-                            className="hover:bg-transparent text-gray-700 font-semibold focus:bg-transparent"
+                            className="hover:bg-transparent text-gray-700 font-semibold text-sm focus:bg-transparent flex items-center"
                         >
                             <ProfileIcon />
-                            Log In
+                            <span className="hidden md:flex">Log In</span>
                         </Link>
                     </li>
                 </ul>

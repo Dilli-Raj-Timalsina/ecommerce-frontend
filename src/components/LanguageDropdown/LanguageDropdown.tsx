@@ -18,7 +18,7 @@ const LanguageDropdown = () => {
     };
 
     return (
-        <div className="dropdown pr-2">
+        <div className="dropdown pr-2 hidden md:flex">
             <label
                 tabIndex={0}
                 className="flex text-gray-700 hover:bg-transparent"

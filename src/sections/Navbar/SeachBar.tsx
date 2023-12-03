@@ -39,11 +39,11 @@ const SeachBar = () => {
         setSearchItem(item);
     };
     return (
-        <div className="dropdown">
-            <div className="relative w-80 md:w-128">
+        <div className="dropdown  md:flex md:ml-16 ml-0">
+            <div className="relative w-56 md:w-128 ">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <svg
-                        className="w-4 h-4 text-gray-500 "
+                        className="w-4 h-4 hidden md:flex text-gray-500 "
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -61,7 +61,7 @@ const SeachBar = () => {
                 <input
                     type="search"
                     id="default-search"
-                    className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 focus:outline-none rounded-2xl bg-gray-50 focus:drop-shadow-xl "
+                    className="block w-full md:p-4 md:pl-10 pl-1 py-3 text-xs md:text-sm text-gray-900 border border-gray-300 focus:outline-none rounded-2xl bg-gray-50 focus:drop-shadow-xl "
                     placeholder="search..."
                     value={searchItem}
                     onClick={() => setShowModel(!showModel)}
