@@ -27,7 +27,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         return (
             <section>
                 <div>
-                    <Navbar categories={categories} />
+                    <Navbar />
                 </div>
                 <section className="flex  ">
                     <SideBar />
