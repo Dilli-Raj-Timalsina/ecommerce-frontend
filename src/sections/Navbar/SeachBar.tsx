@@ -63,6 +63,7 @@ const SeachBar = () => {
                     id="default-search"
                     className="block w-full md:p-4 md:pl-10 pl-1 py-3 text-xs md:text-sm text-gray-900 border border-gray-300 focus:outline-none rounded-2xl bg-gray-50 focus:drop-shadow-xl "
                     placeholder="search..."
+                    autoComplete="off"
                     value={searchItem}
                     onClick={() => setShowModel(!showModel)}
                     onChange={(e) => handleOnChange(e.target.value)}
