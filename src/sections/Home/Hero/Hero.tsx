@@ -42,7 +42,6 @@ export default function Hero() {
                 }
             );
             setHeros((await res.json()).heros[0]);
-            console.log(heros);
         } catch (err) {
             console.log(err);
         }

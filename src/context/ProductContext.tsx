@@ -12,7 +12,6 @@ const ProductContext = createContext<IProductContext | undefined>(undefined);
 
 export function ProductProvider({ children }: { children: React.ReactNode }) {
     const [allProducts, setProducts] = useState<any[] | undefined>(undefined);
-    console.log(allProducts);
     const allCategory = allProducts?.reduce((groups, item) => {
         const category = item.category;
         if (!groups[category]) {

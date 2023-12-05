@@ -38,35 +38,35 @@ export default function ProductsByCategory({
     const [maxCounter, setMaxCounter] = useState(
         Math.floor(displayProducts.length / 8)
     );
-    console.log("Max Counter is ", maxCounter);
-    console.log("Counter is ", counter);
+
     useEffect(() => {
         setDisplayProducts(products.slice(counter * 8, (counter + 1) * 8));
     }, [products]);
+
     useEffect(() => {
         setMaxCounter(Math.floor(displayProducts.length / 8));
     }, [products, displayProducts]);
+
     useEffect(() => {
         setDisplayProducts(products.slice(counter * 8, (counter + 1) * 8));
-        // c = 1
-        // s = 1*5 e = 2*5 5,10
-        // c= 3 , s = 3*5 e = 4*5 15,20
-        //		  3*10 , 4*10
-        //
     }, [counter]);
+
     const sliderHandler = (e: any) => {
         setRateRange(e.target.value);
     };
+
     const handlePrev = (e: any) => {
         if (counter > 0) {
             setCounter(counter - 1);
         }
     };
+
     const handleNext = (e: any) => {
         if (counter < maxCounter) {
             setCounter(counter + 1);
         }
     };
+
     const displayRange = () => {
         let itemsToShow = products.filter((product) => {
             return product?.price <= rateRange;

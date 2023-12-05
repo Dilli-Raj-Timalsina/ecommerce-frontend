@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import {
     Dispatch,
@@ -9,7 +9,6 @@ import {
     useEffect,
     useState,
 } from "react";
-import axios from "axios";
 import { useModalContext } from "./ModalContext";
 
 interface IAuthContext {
@@ -30,14 +29,12 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { showModal } = useModalContext();
     const [user, setUser] = useState<any>(null);
-
     const router = useRouter();
 
     const setUserToState = () => {
         const userDataString = localStorage.getItem("user");
         const userData =
             userDataString !== null ? JSON.parse(userDataString) : null;
-
         setUser(userData);
     };
 
@@ -123,7 +120,6 @@ export const useAuthContext = () => {
     if (context === undefined) {
         throw new Error("useAuthContext must be within AuthContext");
     }
-
     return context;
 };
 

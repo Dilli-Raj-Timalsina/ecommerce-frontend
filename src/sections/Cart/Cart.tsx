@@ -12,7 +12,6 @@ import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
     const { modifyCart, cart, setCart } = useCartContext();
-
     const { notifyUser } = useNotificationContext();
     const { user } = useAuthContext();
 
@@ -79,7 +78,6 @@ const Cart = () => {
             console.error("An error occurred:", error);
         }
     };
-    // for testinng only
 
     const submitHandler = (e: any) => {
         e.preventDefault();
@@ -150,7 +148,6 @@ const Cart = () => {
                                                         <figure className="flex leading-5">
                                                             <div>
                                                                 <div className="block w-16 h-16 rounded border border-gray-200 overflow-hidden">
-                                                                    {/* eslint-disable @next/next/no-img-element */}
                                                                     <Image
                                                                         height={
                                                                             200

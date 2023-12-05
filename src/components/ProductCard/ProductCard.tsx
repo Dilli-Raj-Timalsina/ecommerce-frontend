@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCartContext } from "@/context/CartContext";
 import { useAuthContext } from "@/context/AuthContext";
-import { useState } from "react";
 
 interface ProductInterface {
     image: string;
@@ -48,10 +47,8 @@ export default function ProductCard({
                 href={`/${category}/${id}`}
                 className="rounded-t-xl h-fit overflow-hidden relative"
             >
-                {/* eslint-disable @next/next/no-img-element */}
                 <Image
                     src={image || "/images/coffee.jpg"}
-                    // src={"/images/goldstar.jpg"}
                     alt="product"
                     height={200}
                     width={400}

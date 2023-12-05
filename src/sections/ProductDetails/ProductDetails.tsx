@@ -7,7 +7,6 @@ import ToggleDetail from "@/components/ToggleDetail.tsx/ToggleDetail";
 import { useCartContext } from "@/context/CartContext";
 import Love from "@/assets/love";
 import axios from "axios";
-import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 const productInfo = [
@@ -60,14 +59,9 @@ export default function ProductDetails({
                 }
                 const resObj = res.data;
                 if (resObj.status === "success") {
-                    console.log(resObj);
-                    console.log("WIhslist item retirieved Successfully");
-                    // return resObj.product;
                     const found = resObj.product.find(
                         (pro: any) => pro.id === product.id
                     );
-                    console.log(found);
-
                     if (found) {
                         setIsWished(true);
                     }
@@ -87,7 +81,6 @@ export default function ProductDetails({
             }
         );
         res.then((data) => {
-            console.log(data);
             if (data.data.status == "success") {
                 setIsWished(!isWished);
             }

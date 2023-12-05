@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const ProductCardForProfile = ({ product, state }) => {
     let stateColor = "";
     switch (state) {
@@ -19,7 +21,7 @@ const ProductCardForProfile = ({ product, state }) => {
         <div
             className={`max-w-sm rounded w-44 lg:w-56 overflow-hidden shadow-lg`}
         >
-            <img
+            <Image
                 src={product.thumbNail}
                 alt={product.title}
                 height={200}

@@ -1,14 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
+
 const SideBar = () => {
-    const router = useRouter();
     const currRoute = usePathname();
     const { removeUser } = useAuthContext();
+
     const signUserOut = () => {
         removeUser();
         signOut({ callbackUrl: "/" });
@@ -37,9 +36,7 @@ const SideBar = () => {
                                     height="20"
                                     className="w-6 me-2 h-6"
                                     viewBox="0 0 1920 1920"
-                                >
-                                    {/* Path data */}
-                                </svg>
+                                ></svg>
                                 Dashboard
                             </Link>
                             <Link
@@ -57,22 +54,9 @@ const SideBar = () => {
                                     height="20"
                                     className="w-6 me-2 h-6"
                                     viewBox="0 0 1920 1920"
-                                >
-                                    {/* Path data */}
-                                </svg>
+                                ></svg>
                                 Wishlist
                             </Link>
-                            {/* <Link
-                                href="/profile/wishlist"
-                                className={`${
-                                    currRoute === "/profile/wishlist"
-                                        ? selected
-                                        : others
-                                }  mt-1 flex pe-2 sm:mt-0 sm:ml-3 px-3 py-2 cursor-not-allowed font-bold hover:bg-gray-200 focus:outline-none focus:bg-slate-100 focus:text-blue-600`}
-                            >
-                                Wishlist
-                            </Link> */}
-
                             <button disabled={true}>
                                 <a
                                     href="/profile"
@@ -89,9 +73,7 @@ const SideBar = () => {
                                         height="20"
                                         viewBox="0 0 24 24"
                                         fill="none"
-                                    >
-                                        {/* Path data */}
-                                    </svg>
+                                    ></svg>
                                     Settings
                                 </a>
                             </button>
@@ -111,9 +93,7 @@ const SideBar = () => {
                                     height="20"
                                     viewBox="0 0 24 24"
                                     fill="none"
-                                >
-                                    {/* Path data */}
-                                </svg>
+                                ></svg>
                                 Logout
                             </button>
                         </>
