@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { useNotificationContext } from "@/context/NotificationContext";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
     const { modifyCart, cart, setCart } = useCartContext();
@@ -16,7 +17,7 @@ const Cart = () => {
     const { user } = useAuthContext();
 
     const router = useRouter();
-    const [itemsList, setItemsList] = useState<any[]>([]);
+
     const initialLocation = {
         house: "",
         town: "",
@@ -30,6 +31,31 @@ const Cart = () => {
 
     const confirmOrder = async (locationText: string) => {
         try {
+            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE!);
+            const body = {
+                phone: phone,
+                email: user.email,
+                userId: user.id,
+                products: cart,
+            };
+            const headers = {
+                "Content-Type": "application/json",
+            };
+            const response = await fetch(
+                process.env.NEXT_PUBLIC_BACKEND! +
+                    process.env.NEXT_PUBLIC_CHECKOUT,
+                {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(body),
+                }
+            );
+            const session = await response.json();
+            stripe!.redirectToCheckout({
+                sessionId: session.id,
+            });
+
+            //after successful payment trigger notifypurchase
             const res = await axios.post(
                 `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/utils/notifyPurchase`,
                 {
@@ -38,12 +64,10 @@ const Cart = () => {
                     phone: phone,
                 }
             );
-
             if (!res.status) {
                 throw new Error(`HTTP error! Status: ${res}`);
             }
             const resObj = res.data;
-
             if (resObj.status === "success") {
                 notifyUser({
                     notification:
@@ -72,7 +96,7 @@ const Cart = () => {
 
     const calcTotal = () => {
         let totalAmount = 0;
-        itemsList.forEach((a) => {
+        cart.forEach((a) => {
             totalAmount += Number(a.price);
         }, {});
         return totalAmount;
@@ -80,7 +104,6 @@ const Cart = () => {
 
     useEffect(() => {
         const getCartList = async () => {
-            console.log("Inside getCartList function");
             try {
                 const res =
                     // cart &&
@@ -95,7 +118,6 @@ const Cart = () => {
 
                 if (resObj.status === "success") {
                     setCart(resObj.product);
-                    setItemsList(resObj.product);
                 }
             } catch (error) {
                 console.error("An error at getCartList occurred:", error);
@@ -103,7 +125,7 @@ const Cart = () => {
         };
         getCartList();
     }, []);
-    console.log(itemsList);
+
     return (
         <>
             <section className="mt-6 py-4 sm:mt-0 sm:py-7 bg-primary">
