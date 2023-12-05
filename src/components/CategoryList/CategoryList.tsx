@@ -4,7 +4,6 @@ import { useProductContext } from "@/context/ProductContext";
 
 export default function CategoryList() {
     const { allCategory } = useProductContext();
-
     const createCategoryLink = (category: string) => {
         return category.toLowerCase().split(" ").join("-");
     };

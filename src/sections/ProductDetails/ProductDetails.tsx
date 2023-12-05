@@ -5,6 +5,7 @@ import Image from "next/image";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import ToggleDetail from "@/components/ToggleDetail.tsx/ToggleDetail";
 import { useCartContext } from "@/context/CartContext";
+import { useAuthContext } from "@/context/AuthContext";
 import Love from "@/assets/love";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -35,49 +36,52 @@ export default function ProductDetails({
     const [itemQuantity, setItemQUantity] = useState<number>(1);
     const imgRef = useRef<HTMLImageElement | null>(null);
     const [isWished, setIsWished] = useState(false);
+    const { user } = useAuthContext();
     const router = useRouter();
 
-    console.log(product);
-
     const handleSideImgClick = (image: string) => {
-        console.log("Side image clicked");
-
         if (imgRef.current) {
             imgRef.current.src = `https://9somerandom.s3.ap-south-1.amazonaws.com
 			/${image}`;
         }
     };
-    useEffect(() => {
-        const getList = async () => {
-            try {
-                const res = await axios.get(
-                    `${process.env
-                        .NEXT_PUBLIC_BACKEND!}/api/v1/user/getWishList/26`
-                );
-                if (!res?.status) {
-                    throw new Error(`HTTP error! Status: ${res.status}`);
-                }
-                const resObj = res.data;
-                if (resObj.status === "success") {
-                    const found = resObj.product.find(
-                        (pro: any) => pro.id === product.id
-                    );
-                    if (found) {
-                        setIsWished(true);
-                    }
-                }
-            } catch (error) {
-                console.error("An error at getWishList occurred:", error);
+
+    const getList = async () => {
+        try {
+            const res = await axios.get(
+                `${process.env.NEXT_PUBLIC_BACKEND!}/api/v1/user/getWishList/${
+                    user.id
+                }`
+            );
+            if (!res?.status) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
             }
-        };
-        getList();
-    }, []);
+            const resObj = res.data;
+            if (resObj.status === "success") {
+                const found = resObj.product.find(
+                    (pro: any) => pro.id === product.id
+                );
+                if (found) {
+                    setIsWished(true);
+                }
+            }
+        } catch (error) {
+            console.error("An error at getWishList occurred:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (user && user.id) {
+            getList();
+        }
+    }, [user]);
+
     const wishListSetter = () => {
         const res = axios.patch(
             process.env.NEXT_PUBLIC_BACKEND! + `/api/v1/user/updateWishList`,
             {
-                wishList: 121,
-                userId: 26,
+                wishList: product.id,
+                userId: user.id,
             }
         );
         res.then((data) => {
@@ -88,8 +92,6 @@ export default function ProductDetails({
             console.log(err);
         });
     };
-
-    // Wishlist
 
     const checkoutHandler = async (id: any) => {
         await modifyCart(id, itemQuantity);

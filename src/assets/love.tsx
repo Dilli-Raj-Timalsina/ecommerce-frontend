@@ -10,18 +10,18 @@ const Love = ({ color }: LoveColor) => {
                 id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 37 32"
-                enable-background="new 0 0 37 32"
+                enableBackground="new 0 0 37 32"
                 fill="#d72323"
                 stroke="#d72323"
-                stroke-width="0.00037"
+                strokeWidth="0.00037"
                 width="40"
                 height="40"
             >
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                 <g
                     id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                 ></g>
                 <g id="SVGRepo_iconCarrier">
                     {" "}
@@ -45,7 +45,7 @@ const Love = ({ color }: LoveColor) => {
             viewBox="0 0 16 16"
         >
             <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
             />
         </svg>

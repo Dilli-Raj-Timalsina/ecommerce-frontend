@@ -126,14 +126,18 @@ export default function Hero() {
                             </Link>
                         </div>
                     </div>
-                    <div className="absolute flex -mt-16 justify-center w-full py-2 gap-2">
+                    <div
+                        className="absolute flex -mt-16 justify-center w-full p-4 gap-2"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                    >
                         {heroBanner.map((imageSlides, currState) => {
                             return (
                                 <span
-                                    className="bg-gray-100 p-3  rounded-3xl cursor-pointer border-gray-700 shadow-sm"
+                                    className="bg-gray-100 p-3  rounded-3xl cursor-pointer border-gray-300 border shadow-sm"
                                     key={currState}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
+                                    onClick={() => {
                                         goToNext(currState + 1);
                                     }}
                                 ></span>

@@ -5,10 +5,6 @@ import BounceSpinners from "../Spinners/BounceSpinner";
 import ErrorMessage from "../Spinners/ErrorMessage";
 import SuccessMessage from "../Spinners/SuccessMessage";
 import { categories } from "./CommonTypes";
-// type URLType = {
-//     key: string;
-//     type: string;
-// };
 
 type Product = {
     title: string;
