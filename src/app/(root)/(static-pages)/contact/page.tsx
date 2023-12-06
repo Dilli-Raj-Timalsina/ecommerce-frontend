@@ -6,7 +6,7 @@ import SuccessMessage from "@/components/Spinners/SuccessMessage";
 import ErrorMessage from "@/components/Spinners/ErrorMessage";
 import CourseFAQ from "@/components/data";
 
-interface Contact {
+interface UserDetail {
     name: string;
     email: string;
     contact: string;
@@ -15,7 +15,7 @@ interface Contact {
 }
 
 const ContactPage = () => {
-    const [contact, setContact] = useState<Contact>({
+    const [userDetail, setUserDetail] = useState<UserDetail>({
         name: "",
         email: "",
         contact: "",
@@ -37,7 +37,7 @@ const ContactPage = () => {
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         const { name, value } = event.target;
-        setContact((preVal) => ({
+        setUserDetail((preVal) => ({
             ...preVal,
             [name]: value,
         }));
@@ -54,7 +54,7 @@ const ContactPage = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(contact),
+                    body: JSON.stringify(userDetail),
                 }
             );
             const data = await res.json();

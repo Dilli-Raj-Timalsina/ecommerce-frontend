@@ -32,7 +32,7 @@ const Cart = () => {
     const calcTotal = () => {
         let totalAmount = 0;
         cart.forEach((a) => {
-            totalAmount += Number(a.price);
+            totalAmount += Number(a.price) * Number(a.amount);
         }, {});
         return totalAmount;
     };
@@ -66,11 +66,14 @@ const Cart = () => {
 
             //after successful payment trigger notifypurchase
             const res = await axios.post(
-                `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/utils/notifyPurchase`,
+                process.env.NEXT_PUBLIC_BACKEND! +
+                    process.env.NEXT_PUBLIC_NOTIFYPURCHASE,
                 {
                     email: user?.email,
+                    name: user?.name,
                     location: locationText,
                     phone: phone,
+                    item: cart,
                 }
             );
             if (!res.status) {

@@ -90,7 +90,11 @@ export default function CheckoutDetails({
                         href="/"
                         className="px-4 py-3 inline-block text-lg w-full text-center font-medium text-secondary bg-gray-300 shadow-sm border border-gray-200 rounded-md hover:bg-gray-400"
                     >
-                        Cash on Delivery
+                        {loadingCash ? (
+                            <BounceSpinners size={"w-3 h-3"} />
+                        ) : (
+                            <span>Cash on Delivery</span>
+                        )}
                     </Link>
                 </article>
             </form>

@@ -19,12 +19,14 @@
         "prettier-plugin-tailwindcss": "^0.5.5",
         "react": "^18",
         "react-dom": "^18",
-        "react-easy-edit": "^1.17.2"
+        "react-easy-edit": "^1.17.2",
+        "react-scroll": "^1.9.0"
     },
     "devDependencies": {
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
+        "@types/react-scroll": "^1.8.10",
         "autoprefixer": "^10",
         "daisyui": "^4.4.8",
         "eslint": "^8",
