@@ -17,7 +17,6 @@ export default function Category({
     useEffect(() => {
         setProducts(items?.slice(0, 5));
     }, [items]);
-    console.log(products);
     return (
         <div className="w-screen text-white">
             <div className="flex md:px-16 px-8 w-full items-center justify-between">

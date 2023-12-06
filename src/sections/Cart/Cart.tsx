@@ -104,26 +104,13 @@ const Cart = () => {
     };
 
     useEffect(() => {
-        const getCartList = async () => {
-            try {
-                const res = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/user/getCartItem/${user.id}`
-                );
-                if (!res?.status) {
-                    throw new Error(`HTTP error! Status: ${res.status}`);
-                }
-                const resObj = res.data;
-                console.log(resObj);
-
-                if (resObj.status === "success") {
-                    setCart(resObj.product);
-                }
-            } catch (error) {
-                console.error("An error at getCartList occurred:", error);
-            }
-        };
-        getCartList();
-    }, []);
+        if (user && user.id) {
+            const cartStored = localStorage.getItem("cart");
+            const returnedCart =
+                cartStored !== null ? JSON.parse(cartStored) : null;
+            setCart(returnedCart);
+        }
+    }, [user]);
 
     return (
         <>

@@ -8,6 +8,7 @@ interface ICartContext {
     cart: any[];
     modifyCart: (id: string, amt: number) => Promise<void>;
     setCart: React.Dispatch<React.SetStateAction<any[]>>;
+    removeCartLocalStorage: () => void;
 }
 
 const CartContext = createContext<ICartContext | undefined>(undefined);
@@ -16,6 +17,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const { showModal } = useModalContext();
     const { user } = useAuthContext();
     const [cart, setCart] = useState<any[]>([]);
+
+    const removeCartLocalStorage = async () => {
+        localStorage.removeItem("cart");
+        setCart([]);
+    };
 
     const modifyCart = async (id: string, amt: number) => {
         try {
@@ -44,6 +50,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                     const resObj = res.data;
 
                     if (resObj.status === "success") {
+                        localStorage.setItem(
+                            "cart",
+                            JSON.stringify(resObj.product)
+                        );
                         setCart(resObj.product);
                     }
                 } catch (error) {
@@ -61,6 +71,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 cart,
                 setCart,
                 modifyCart,
+                removeCartLocalStorage,
             }}
         >
             {children}
