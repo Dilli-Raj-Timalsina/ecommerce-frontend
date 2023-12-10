@@ -13,7 +13,9 @@ const Wishlist = () => {
             try {
                 const res = await axios.get(
                     `${process.env
-                        .NEXT_PUBLIC_BACKEND!}/api/v1/user/getWishList/26`
+                        .NEXT_PUBLIC_BACKEND!}/api/v1/user/getWishList/${
+                        user.id
+                    }`
                 );
                 if (!res?.status) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
