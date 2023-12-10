@@ -9,7 +9,7 @@ const FacebookSigninButton = () => {
     return (
         <button
             onClick={() => {
-                loginWithGoogle();
+                // loginWithGoogle();
             }}
             className="flex items-center gap-2 md:px-6 px-4 btn border border-gray-300"
         >

@@ -1,5 +1,3 @@
-"use client";
-
 import Category from "@/components/Category/category";
 import { useProductContext } from "@/context/ProductContext";
 

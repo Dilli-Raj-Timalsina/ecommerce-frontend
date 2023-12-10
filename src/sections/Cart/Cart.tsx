@@ -7,11 +7,13 @@ import CartBox from "./CartBox";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
+import { useModalContext } from "@/context/ModalContext";
 import { useNotificationContext } from "@/context/NotificationContext";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
     const { modifyCart, cart, setCart } = useCartContext();
+    const { showModal } = useModalContext();
     const [loadingNow, setLoadingNow] = useState(false);
     const [loadingCash, setLoadingCash] = useState(false);
     const { notifyUser } = useNotificationContext();
@@ -87,6 +89,39 @@ const Cart = () => {
                     date: new Date(),
                 });
                 setLoadingNow(false);
+                showModal("Your order is confirmed !!", "Info");
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    };
+
+    const confirmOrder2 = async (locationText: string) => {
+        setLoadingCash(true);
+        try {
+            const res = await axios.post(
+                process.env.NEXT_PUBLIC_BACKEND! +
+                    process.env.NEXT_PUBLIC_NOTIFYPURCHASE,
+                {
+                    email: user?.email,
+                    name: user?.name,
+                    location: locationText,
+                    phone: phone,
+                    item: cart,
+                }
+            );
+            if (!res.status) {
+                throw new Error(`HTTP error! Status: ${res}`);
+            }
+            const resObj = res.data;
+            if (resObj.status === "success") {
+                notifyUser({
+                    notification:
+                        "Your order has been confirmed. Please check your mail.",
+                    date: new Date(),
+                });
+                setLoadingCash(false);
+                showModal("Your order is confirmed !!", "Info");
             }
         } catch (error) {
             console.error("An error occurred:", error);
@@ -104,6 +139,17 @@ const Cart = () => {
 		POST CODE: ${locationData.postcode}`;
 
         confirmOrder(locationText);
+    };
+    const submitHandler2 = () => {
+        if (!user) {
+            router.push("/login");
+            return;
+        }
+        let locationText = `HOUSE NUMBER AND STREET: ${locationData.house}
+		TOWN/LOCALITY: ${locationData.town}
+		POST CODE: ${locationData.postcode}`;
+
+        confirmOrder2(locationText);
     };
 
     useEffect(() => {
@@ -135,6 +181,7 @@ const Cart = () => {
                             ></CartBox>
                             <CheckoutDetails
                                 submitHandler={submitHandler}
+                                submitHandler2={submitHandler2}
                                 setPhone={setPhone}
                                 locationHandler={locationHandler}
                                 cart={cart}

@@ -9,6 +9,7 @@ export default function CheckoutDetails({
     calcTotal,
     loadingNow,
     loadingCash,
+    submitHandler2,
 }: any) {
     return (
         <aside className="md:w-1/4">
@@ -85,19 +86,21 @@ export default function CheckoutDetails({
                             <span>Pay Now</span>
                         )}
                     </button>
-
-                    <Link
-                        href="/"
-                        className="px-4 py-3 inline-block text-lg w-full text-center font-medium text-secondary bg-gray-300 shadow-sm border border-gray-200 rounded-md hover:bg-gray-400"
-                    >
-                        {loadingCash ? (
-                            <BounceSpinners size={"w-3 h-3"} />
-                        ) : (
-                            <span>Cash on Delivery</span>
-                        )}
-                    </Link>
                 </article>
             </form>
+            <button
+                className="px-4 py-3 inline-block text-lg w-full text-center font-medium text-secondary bg-gray-300 shadow-sm border border-gray-200 rounded-md hover:bg-gray-400"
+                onClick={() => {
+                    submitHandler2();
+                }}
+                disabled={loadingCash}
+            >
+                {loadingCash ? (
+                    <BounceSpinners size={"w-3 h-3"} />
+                ) : (
+                    <span>Cash on Delivery</span>
+                )}
+            </button>
         </aside>
     );
 }
