@@ -23,7 +23,9 @@ const SeachBar = () => {
             if (!allProducts) return;
 
             const dataFiltered: SearchResultsAPIType[] = allProducts
-                .filter((obj) => obj.title.includes(searchItem))
+                .filter((obj) =>
+                    obj.title.toLowerCase().includes(searchItem.toLowerCase())
+                )
                 .map((obj) => ({ title: obj.title, id: obj.id }));
 
             setSearchResultsAPI(dataFiltered);
@@ -35,7 +37,7 @@ const SeachBar = () => {
     const handleOnChange = (item: string) => {
         if (item.length === 0) {
             setShowModel(false);
-        }
+        } else setShowModel(true);
         setSearchItem(item);
     };
     return (

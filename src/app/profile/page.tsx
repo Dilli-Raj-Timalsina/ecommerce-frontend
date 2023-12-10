@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import React from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useState, useEffect } from "react";
@@ -23,14 +23,16 @@ const ProfilePage = () => {
             }
         };
 
-        // const fetchCompletedOrders = async () => {
-        //     try {
-        //         const response = await axios.get("/api/completed-orders");
-        //         setCompletedOrders(response.data);
-        //     } catch (error) {
-        //         console.error("Error fetching completed orders:", error);
-        //     }
-        // };
+        const fetchCompletedOrders = async () => {
+            try {
+                const response = await axios.get(
+                    process.env.NEXT_PUBLIC_BACKEND + "/api/completed-orders"
+                );
+                setCompletedOrders(response.data);
+            } catch (error) {
+                console.error("Error fetching completed orders:", error);
+            }
+        };
 
         // const fetchOrderHistory = async () => {
         //     try {
@@ -110,9 +112,9 @@ const ProfilePage = () => {
                             </div>
                         </div>
                         <div
-                            onClick={() => {
-                                setActiveButton("history");
-                            }}
+                            // onClick={() => {
+                            //     setActiveButton("history");
+                            // }}
                             className={`bg-white cursor-pointer ${
                                 activeButton === "history"
                                     ? " border-teal-400 bg-green-100"
