@@ -72,17 +72,7 @@ export default function Hero() {
             <div className="flex flex-col md:flex-col w-full">
                 <CategoryList />
                 <div
-                    className="h-2/3-screen lg:h-4/5-screen cursor-pointer"
-                    onClick={() => {
-                        router.push(`/${
-                            curr === 1
-                                ? heros?.category1
-                                : curr === 2
-                                ? heros?.category2
-                                : heros?.category3
-                        }
-                                `);
-                    }}
+                    className="h-2/3-screen lg:h-4/5-screen "
                     style={bgImageStyle}
                 >
                     <div
@@ -97,8 +87,18 @@ export default function Hero() {
                             </span>
                         </p>
                         <p
-                            className="text-4xl lg:text-5xl font-medium max-w-md"
+                            className="text-4xl lg:text-5xl font-medium max-w-md cursor-pointer"
                             style={{ lineHeight: "1.25" }}
+                            onClick={() => {
+                                router.push(`/${
+                                    curr === 1
+                                        ? heros?.category1
+                                        : curr === 2
+                                        ? heros?.category2
+                                        : heros?.category3
+                                }
+                                `);
+                            }}
                         >
                             {curr === 1
                                 ? heros?.h1title

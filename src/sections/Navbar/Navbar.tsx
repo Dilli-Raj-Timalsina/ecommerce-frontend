@@ -11,7 +11,7 @@ export default function Navbar() {
     return (
         <div className="top-0 navbar z-20  w-screen fixed flex flex-row items-center justify-between lg:px-5 pl-2 pr-2 bg-base-100 text-neutral">
             <div className=" px-0 lg:px-8">
-                <div className="dropdown">
+                {/* <div className="dropdown">
                     <label
                         tabIndex={0}
                         className="btn btn-ghost p-0 px-2 lg:hidden"
@@ -19,10 +19,10 @@ export default function Navbar() {
                         <HamburgerMenu />
                     </label>
                     <DropBar></DropBar>
-                </div>
+                </div> */}
                 <Link
                     href={"/"}
-                    className="btn hover:bg-transparent btn-ghost normal-case text-sm p-0 lg:p-3 lg:text-xl "
+                    className="btn hover:bg-transparent btn-ghost normal-case text-sm p-0 lg:p-3 lg:text-xl mx-1"
                 >
                     Ushopie
                 </Link>
@@ -30,7 +30,7 @@ export default function Navbar() {
 
             <SeachBar />
 
-            <div className="px-1 ">
+            <div className="mr-3 ">
                 <LanguageDropdown />
                 <CartButton />
                 <NotifyButton />
@@ -52,11 +52,6 @@ function DropBar() {
                 <li className="underline text-base">
                     <Link href="/signup" className="">
                         Signup
-                    </Link>
-                </li>
-                <li className="underline text-base">
-                    <Link href="/logout" className="">
-                        Logout
                     </Link>
                 </li>
             </div>

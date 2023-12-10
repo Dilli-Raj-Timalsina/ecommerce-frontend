@@ -39,8 +39,8 @@ const SeachBar = () => {
         setSearchItem(item);
     };
     return (
-        <div className="dropdown  md:flex md:ml-16 ml-0">
-            <div className="relative w-56 md:w-128 ">
+        <div className="dropdown  md:flex md:ml-16 ml-2">
+            <div className="relative w-60 md:w-128 ">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <svg
                         className="w-4 h-4 hidden md:flex text-gray-500 "
