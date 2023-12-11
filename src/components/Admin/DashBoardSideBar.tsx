@@ -70,10 +70,15 @@ export default function DashBoardSideBar(props: DashBoardSideBarProps) {
                 </button>
             </div>
             <HorizontalIcon></HorizontalIcon>
-            <div className="flex items-center gap-3 ml-2 hover:ml-3 cursor-pointer">
+            <button
+                className="flex items-center gap-3 ml-2 hover:ml-3 cursor-pointer"
+                onClick={() => {
+                    router.push("/admin/orders");
+                }}
+            >
                 <OrdersIcon></OrdersIcon>
                 <h1>Orders</h1>
-            </div>
+            </button>
             <HorizontalIcon></HorizontalIcon>
             <div className="flex items-center gap-3 ml-2 hover:ml-3 cursor-pointer">
                 <SettingsIcon></SettingsIcon>
