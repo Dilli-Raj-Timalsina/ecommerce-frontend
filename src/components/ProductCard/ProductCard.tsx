@@ -57,7 +57,7 @@ export default function ProductCard({
             </Link>
             <div className="card-body py-4 px-2 ">
                 <p
-                    className="line-clamp-1 cursor-pointer"
+                    className="line-clamp-1 cursor-pointer overflow-hidden"
                     onClick={() => {
                         router.push(`/${category}/${id}`);
                     }}
