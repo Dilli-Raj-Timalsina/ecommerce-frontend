@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import CategoryList from "../../../components/CategoryList/CategoryList";
 import { useRouter } from "next/dist/client/components/navigation";
+import { setTimeout } from "timers";
 
 const heroBanner = [
     "/images/coffee.jpg",
@@ -49,6 +50,16 @@ export default function Hero() {
     useEffect(() => {
         fetchData();
     }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (curr == 3) {
+                goToNext(1);
+            } else {
+                goToNext(curr + 1);
+            }
+        }, 7000);
+    }, [curr]);
 
     const bgImageStyle = {
         backgroundImage: `url(https://9somerandom.s3.ap-south-1.amazonaws.com/${

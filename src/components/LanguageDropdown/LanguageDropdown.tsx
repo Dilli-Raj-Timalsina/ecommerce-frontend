@@ -18,20 +18,20 @@ const LanguageDropdown = () => {
     };
 
     return (
-        <div className="dropdown pr-2 hidden md:flex">
+        <div className="dropdown mx-3 hidden md:flex">
             <label
                 tabIndex={0}
                 className="flex text-gray-700 hover:bg-transparent"
             >
-                <div className="indicator">
-                    <span className="pe-1">{language.logo}</span>
+                <div className="indicator flex  items-center">
+                    <span className="block pr-1">{language.logo}</span>
                     {language.name}
                     <ArrowBottom />
                 </div>
             </label>
             <ul
                 tabIndex={0}
-                className="dropdown-content z-[1] menu p-4 shadow bg-base-100 rounded-box w-32"
+                className="dropdown-content z-[1] menu m-4 shadow bg-base-100 rounded-box w-32"
             >
                 {languages.map((e, i) => {
                     return (
