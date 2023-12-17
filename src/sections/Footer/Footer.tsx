@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
     YoutubeLogo,
     FacebookLogo,
@@ -11,9 +12,17 @@ export default function Footer() {
         <div className="w-full pt-2 bg-gray-100  text-gray-600">
             <footer className="footer z-10 grid-cols-1 text-center md:text-left md:grid-cols-4 p-10 place-content-around">
                 <div className="place-items-center mx-auto">
-                    <h1 className="w-full text-secondary font-bold text-3xl">
-                        <Link href={"/"}>Ushopie</Link>
-                    </h1>
+                    <Link href={"/"}>
+                        {" "}
+                        <Image
+                            src="/images/mainlogo.png"
+                            height={400}
+                            width={400}
+                            alt="okay"
+                            className="text-center md:text-left md:w-40 md:h-11  md:left-8  w-14 h-5  left-2 right-1 cursor-pointer"
+                        />
+                    </Link>
+
                     <p>
                         Hendrerit turpis id sed elementum erat. Cursus ultrices
                         orci fermentum massa ut congue purus. Nulla nibh id
