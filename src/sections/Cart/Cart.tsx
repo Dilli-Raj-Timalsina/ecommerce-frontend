@@ -188,6 +188,8 @@ const Cart = () => {
                                 calcTotal={calcTotal}
                                 loadingNow={loadingNow}
                                 loadingCash={loadingCash}
+                                locationData={locationData}
+                                phone={phone}
                             ></CheckoutDetails>
                         </div>
                     </div>

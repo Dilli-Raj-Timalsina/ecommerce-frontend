@@ -10,6 +10,8 @@ export default function CheckoutDetails({
     loadingNow,
     loadingCash,
     submitHandler2,
+    locationData,
+    phone,
 }: any) {
     return (
         <aside className="md:w-1/4">
@@ -91,7 +93,14 @@ export default function CheckoutDetails({
             <button
                 className="px-4 py-3 inline-block text-lg w-full text-center font-medium text-secondary bg-gray-300 shadow-sm border border-gray-200 rounded-md hover:bg-gray-400"
                 onClick={() => {
-                    submitHandler2();
+                    if (
+                        locationData.house != "" &&
+                        locationData.town != "" &&
+                        locationData.postcode != "" &&
+                        phone != ""
+                    ) {
+                        submitHandler2();
+                    }
                 }}
                 disabled={loadingCash}
             >
